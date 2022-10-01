@@ -1,10 +1,13 @@
 --variables globales
 Object = require "lukeclassic"
+local button = require "Buttons"
 player = Object:extend()
 enemy = Object:extend()
+
 --CLASES---
 --Clase jugador
-function player:new(x, y, target_x, target_y, velocity, clik_right, click_left)
+function player:new(x, y, target_x, target_y, velocity, clik_right, click_left,radius)
+    self.radius = radius or 30
     self.velocity = velocity or 0
     self.x = x or 0
     self.y = y or 0
@@ -22,6 +25,23 @@ function enemy:new(x,y,target_x,target_y,velocity,vision)
     self.target_x = target_x or 0
     self.target_y = target_y or 0
 end
+-- Menu --
+local game = {
+    state = {
+        menu = true,
+        paused = false,
+        running = false,
+        ended = false
+    }
+}
+
+
+
+
+local buttons = {
+    menu_states = {}
+}
+
 
 --Other Fuctions--
 
@@ -35,7 +55,24 @@ function norm(x,y)
     return d
 end  
 
+local function StartGame()
+game.state["menu"]= false
+game.state["running"] = true
+end
 
+
+
+function love.mousepressed(x, y, button, istouch, presses)
+    if not game.state['running'] then
+        if button == 1 then 
+            if game.state["menu"] then 
+                for index in  pairs(buttons.menu_states) do
+                    buttons.menu_states[index]:checkPressed(x, y , player1.radius)
+                end 
+            end
+        end
+    end
+end
 --Other Methods--
 -- enemy --
 function enemy:move_to(location_x,location_y)
@@ -45,29 +82,38 @@ function enemy:move_to(location_x,location_y)
 end    
 
 
-player1 = player(750,600,50,50,5)
+player1 = player(750,600,50,50,5,5)
 enemies_mele = {}
 table.insert(enemies_mele,enemy(500,0))
 table.insert(enemies_mele,enemy(750,0))
 enemy1 = enemy(750,0)
 --cargar
 function love.load()
-
+buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50) 
+buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50) 
+buttons.menu_states.exit_game = newButton("Exit Game", love.event.quit, nil, 110, 50) 
+buttons.menu_states.restart_game = newButton("Re-start", nil, nil, 110, 50) 
 end
 --actualizar
 function love.update()
     --movimientos del jugador-- 
-    if love.keyboard.isDown("w") then
-        player1.y = player1.y - 1*player1.velocity
-    end
-    if love.keyboard.isDown("s") then
-        player1.y = player1.y + 1*player1.velocity
-    end
-    if love.keyboard.isDown("a") then
-        player1.x = player1.x - 1*player1.velocity
-    end
-    if love.keyboard.isDown("d") then
-        player1.x = player1.x + 1*player1.velocity
+    if game.state["running"] then  
+        if love.keyboard.isDown("w") then
+            player1.y = player1.y - 1*player1.velocity
+        end
+        if love.keyboard.isDown("s") then
+            player1.y = player1.y + 1*player1.velocity
+        end
+        if love.keyboard.isDown("a") then
+            player1.x = player1.x - 1*player1.velocity
+        end
+        if love.keyboard.isDown("d") then
+            player1.x = player1.x + 1*player1.velocity
+        end
+        if love.keyboard.isDown("m") then
+            game.state["menu"]= true
+            game.state["running"] = false
+        end
     end
     player1.target_x = love.mouse.getX() -- ubicacion del mouse en x
     player1.target_y = love.mouse.getY() -- ubicacion del mouse en y 
@@ -75,33 +121,43 @@ function love.update()
     player1.click_left = love.mouse.isDown(2)
 
     --movimientos del los enemigos--
-    for i,enemy_mele in pairs(enemies_mele) do
-        if dist(player1.x, player1.y, enemy_mele.x, enemy_mele.y) < enemy_mele.vision then
-            enemy_mele.target_x = player1.x
-            enemy_mele.target_y = player1.y
-            enemy_mele:move_to(enemy_mele.target_x,enemy_mele.target_y)
+    if game.state["running"] then
+        for i,enemy_mele in pairs(enemies_mele) do
+            if dist(player1.x, player1.y, enemy_mele.x, enemy_mele.y) < enemy_mele.vision then
+                enemy_mele.target_x = player1.x
+                enemy_mele.target_y = player1.y
+                enemy_mele:move_to(enemy_mele.target_x,enemy_mele.target_y)
+            end
         end
     end
 end
 --dibujar 
 function love.draw() 
+    if game.state["running"] then 
     -- Dibujar Jugador 1 --
-    love.graphics.setColor(360, 360, 360) --dibujar en el color indicado 
-    love.graphics.rectangle("fill", (player1.x +20)/2, (player1.y +20)/2,20,20)
-    love.graphics.setColor(360, 360, 360) --dibujar en el color indicado 
-    if player1.click_right then
-        love.graphics.setColor(1, 0, 0)
-    end    
-    if player1.click_left then
-        love.graphics.setColor(0, 1, 0)
-    end
-    love.graphics.circle("line", player1.target_x, player1.target_y, 10) --dibuja un circulo
+        love.graphics.setColor(360, 360, 360) --dibujar en el color indicado 
+        love.graphics.rectangle("fill", (player1.x +20)/2, (player1.y +20)/2,20,20)
+        love.graphics.setColor(360, 360, 360) --dibujar en el color indicado 
+        if player1.click_right then
+            love.graphics.setColor(1, 0, 0)
+        end    
+        if player1.click_left then
+            love.graphics.setColor(0, 1, 0)
+        end
+        love.graphics.circle("line", player1.target_x, player1.target_y, 10) --dibuja un circulo
     -- Dibujar Enemigos
-    love.graphics.setColor(360, 360, 360)
-    for i,enemy_mele in pairs(enemies_mele) do
-        love.graphics.rectangle("line", (enemy_mele.x +20)/2, (enemy_mele.y +20)/2,20,20)
+        love.graphics.setColor(360, 360, 360)
+        for i,enemy_mele in pairs(enemies_mele) do
+            love.graphics.rectangle("line", (enemy_mele.x +20)/2, (enemy_mele.y +20)/2,20,20)
+        end
+        love.graphics.print("Luke es bonito", 500,10)
+    elseif game.state["menu"] then 
+        love.graphics.print("MENU", 70,10)
+        buttons.menu_states.play_game:draw(40, 30 ,20 ,20)
+        buttons.menu_states.setting:draw(40, 90 ,20 ,20)
+        buttons.menu_states.exit_game:draw(40, 150,20 ,20)
+        buttons.menu_states.restart_game:draw(40, 210 ,20 ,20)
     end
-    love.graphics.rectangle("line", (enemy1.x +20)/2, (enemy1.y +20)/2,20,20)
-    love.graphics.print("Luke es bonito", 500,10)
+
 
 end
