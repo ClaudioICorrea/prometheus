@@ -1,9 +1,12 @@
 --variables globales
 Object = require "lukeclassic"
 local button = require "Buttons"
+require "enemies"
+require "projectiles"
+require "enemies"
+require "Utilities"
 player = Object:extend()
-enemy = Object:extend()
-
+bullets ={}
 --CLASES---
 --Clase jugador
 function player:new(x, y, target_x, target_y, velocity, clik_right, click_left,radius)
@@ -17,14 +20,7 @@ function player:new(x, y, target_x, target_y, velocity, clik_right, click_left,r
     self.clik_left = click_left or false 
 end
 --Clase Enemigo
-function enemy:new(x,y,target_x,target_y,velocity,vision)
-    self.vision = vision or 300
-    self.velocity = velocity or 2
-    self.x = x or 0
-    self.y = y or 0
-    self.target_x = target_x or 0
-    self.target_y = target_y or 0
-end
+
 -- Menu --
 local game = {
     state = {
@@ -81,18 +77,18 @@ function enemy:move_to(location_x,location_y)
     self.y = self.y + direction[2]*self.velocity
 end    
 
-
-player1 = player(750,600,50,50,5,5)
-enemies_mele = {}
-table.insert(enemies_mele,enemy(500,0))
-table.insert(enemies_mele,enemy(750,0))
-enemy1 = enemy(750,0)
 --cargar
 function love.load()
-buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50) 
-buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50) 
-buttons.menu_states.exit_game = newButton("Exit Game", love.event.quit, nil, 110, 50) 
-buttons.menu_states.restart_game = newButton("Re-start", nil, nil, 110, 50) 
+    player1 = player(750,600,50,50,5,5)
+    buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50) 
+    buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50) 
+    buttons.menu_states.exit_game = newButton("Exit Game", love.event.quit, nil, 110, 50) 
+    buttons.menu_states.restart_game = newButton("Re-start", nil, nil, 110, 50) 
+    enemies_mele = {}
+    enemies_range = {}
+    table.insert(enemies_range,enemy:newRanger(500,16))
+    table.insert(enemies_mele,enemy(250,0))
+    table.insert(enemies_mele,enemy(350,0))
 end
 --actualizar
 function love.update()
@@ -129,6 +125,18 @@ function love.update()
                 enemy_mele:move_to(enemy_mele.target_x,enemy_mele.target_y)
             end
         end
+        for i,enemy_range in pairs(enemies_range) do
+            if dist(player1.x, player1.y, enemy_range.x, enemy_range.y) < enemy_range.vision then
+                enemy_range.target_x = player1.x
+                enemy_range.target_y = player1.y
+                enemy_range:move_to(enemy_range.target_x,enemy_range.target_y)
+                table.insert(bullets,enemy_range:shoot())
+    
+            end
+        end
+        for i,bullet in ipairs(bullets) do
+            bullet:move()
+        end
     end
 end
 --dibujar 
@@ -146,11 +154,16 @@ function love.draw()
         end
         love.graphics.circle("line", player1.target_x, player1.target_y, 10) --dibuja un circulo
     -- Dibujar Enemigos
-        love.graphics.setColor(360, 360, 360)
-        for i,enemy_mele in pairs(enemies_mele) do
-            love.graphics.rectangle("line", (enemy_mele.x +20)/2, (enemy_mele.y +20)/2,20,20)
-        end
-        love.graphics.print("Luke es bonito", 500,10)
+    love.graphics.setColor(360, 360, 360)
+    for i,enemy_mele in pairs(enemies_mele) do
+        enemy_mele:draw()
+    end
+    for i,enemy in pairs(enemies_range) do
+        enemy:draw()
+    end
+    for i,bullet in ipairs(bullets) do
+        bullet:draw()
+    end
     elseif game.state["menu"] then 
         love.graphics.print("MENU", 70,10)
         buttons.menu_states.play_game:draw(40, 30 ,20 ,20)
