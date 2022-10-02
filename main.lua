@@ -3,7 +3,6 @@ Object = require "lukeclassic"
 local button = require "Buttons"
 require "enemies"
 require "projectiles"
-require "enemies"
 require "Utilities"
 player = Object:extend()
 bullets ={}
@@ -79,20 +78,23 @@ end
 
 --cargar
 function love.load()
-    ratio = 5
+    --jugador---
     player1 = player(750,600,50,50,5,5)
+    --menu--
     buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50) 
     buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50) 
     buttons.menu_states.exit_game = newButton("Exit Game", love.event.quit, nil, 110, 50) 
     buttons.menu_states.restart_game = newButton("Re-start", nil, nil, 110, 50) 
+    --esenario--
+    --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
     table.insert(enemies_range,enemy:newRanger(500,16,nil,nil,nil,nil,1))
-    table.insert(enemies_range,enemy:newRanger(500,500,nil,nil,nil,nil,100))
+    table.insert(enemies_range,enemy:newRanger(500,500,nil,nil,nil,nil,50))
     table.insert(enemies_mele,enemy(250,0))
     table.insert(enemies_mele,enemy(350,0))
 end
---actualizar
+
 function love.update()
     --movimientos del jugador-- 
     if game.state["running"] then  
@@ -172,6 +174,4 @@ function love.draw()
         buttons.menu_states.exit_game:draw(40, 150,20 ,20)
         buttons.menu_states.restart_game:draw(40, 210 ,20 ,20)
     end
-
-
 end
