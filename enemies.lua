@@ -22,8 +22,8 @@ end
 
 function enemy:shoot()
     d = ((self.target_x-self.x)^2 + (self.target_y-self.y)^2)^(0.5)
-    x=(self.target_x-self.x)/d
-    y=(self.target_y-self.y)/d
+    x = (self.target_x-self.x)/d
+    y = (self.target_y-self.y)/d
     bullet = Projectile(self.x,self.y,x,y)
     return bullet
 end
@@ -36,7 +36,9 @@ function enemy:draw()
     end
 end
 
-function enemy:newRanger(x,y,target_x,target_y,velocity,vision)
+function enemy:newRanger(x,y,target_x,target_y,velocity,vision,velocity_shoot,ratio)
+    self.ratio = velocity_shoot or 100
+    self.velocity_shoot = velocity_shoot or 100
     ranger = enemy(x,y,target_x,target_y,velocity,vision)
     ranger.isRanger = true
     return ranger

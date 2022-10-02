@@ -15,16 +15,17 @@ function Projectile:move()
     self.y = self.y + self.direction_y*self.velocity
 end
 
-function Projectile:insert_projetile(ratio,enemy_range,bullets)
-    if ratio <= 5 then
+function Projectile:insert_projectile( ratio, ratio_max, bullets, func)
+    if ratio <= ratio_max then
         ratio = ratio -1
             if ratio == 0 then
-                table.insert(bullets,enemy_range)
-                ratio = 5
+                table.insert(bullets, func)
+                ratio = ratio_max
             end
-        end
-
+    end
+    return ratio
 end
+
 
 function Projectile:draw()
     love.graphics.circle("line",self.x, self.y, 10)

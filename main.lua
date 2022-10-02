@@ -79,7 +79,7 @@ end
 
 --cargar
 function love.load()
-    ratio = 3
+    ratio = 5
     player1 = player(750,600,50,50,5,5)
     buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50) 
     buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50) 
@@ -87,7 +87,8 @@ function love.load()
     buttons.menu_states.restart_game = newButton("Re-start", nil, nil, 110, 50) 
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range,enemy:newRanger(500,16))
+    table.insert(enemies_range,enemy:newRanger(500,16,nil,nil,nil,nil,1))
+    table.insert(enemies_range,enemy:newRanger(500,500,nil,nil,nil,nil,100))
     table.insert(enemies_mele,enemy(250,0))
     table.insert(enemies_mele,enemy(350,0))
 end
@@ -131,14 +132,7 @@ function love.update()
                 enemy_range.target_x = player1.x
                 enemy_range.target_y = player1.y
                 enemy_range:move_to(enemy_range.target_x,enemy_range.target_y)
-                if ratio <= 5 then
-                ratio = ratio -1
-                    if ratio == 0 then
-                        table.insert(bullets,enemy_range:shoot())
-                        ratio = 5
-                    end
-                end
-    
+                enemy_range.ratio = Projectile:insert_projectile(enemy_range.ratio,enemy_range.velocity_shoot, bullets, enemy_range:shoot())    
             end
         end
         for i,bullet in ipairs(bullets) do
