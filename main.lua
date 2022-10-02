@@ -19,7 +19,7 @@ function player:new(x, y, target_x, target_y, velocity, clik_right, click_left,r
     self.clik_right = clik_right or false
     self.clik_left = click_left or false 
 end
---Clase Enemigo
+
 
 -- Menu --
 local game = {
@@ -79,6 +79,7 @@ end
 
 --cargar
 function love.load()
+    ratio = 3
     player1 = player(750,600,50,50,5,5)
     buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50) 
     buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50) 
@@ -130,7 +131,13 @@ function love.update()
                 enemy_range.target_x = player1.x
                 enemy_range.target_y = player1.y
                 enemy_range:move_to(enemy_range.target_x,enemy_range.target_y)
-                table.insert(bullets,enemy_range:shoot())
+                if ratio <= 5 then
+                ratio = ratio -1
+                    if ratio == 0 then
+                        table.insert(bullets,enemy_range:shoot())
+                        ratio = 5
+                    end
+                end
     
             end
         end
@@ -144,7 +151,7 @@ function love.draw()
     if game.state["running"] then 
     -- Dibujar Jugador 1 --
         love.graphics.setColor(360, 360, 360) --dibujar en el color indicado 
-        love.graphics.rectangle("fill", (player1.x +20)/2, (player1.y +20)/2,20,20)
+        square_draw("fill", player1.x , player1.y ,20,20)
         love.graphics.setColor(360, 360, 360) --dibujar en el color indicado 
         if player1.click_right then
             love.graphics.setColor(1, 0, 0)
@@ -158,9 +165,9 @@ function love.draw()
     for i,enemy_mele in pairs(enemies_mele) do
         enemy_mele:draw()
     end
-    for i,enemy in pairs(enemies_range) do
-        enemy:draw()
-    end
+        for i,enemy in pairs(enemies_range) do
+            enemy:draw()
+        end
     for i,bullet in ipairs(bullets) do
         bullet:draw()
     end
