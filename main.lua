@@ -68,7 +68,7 @@ function love.mousepressed(x, y, button, istouch, presses)
         end
     end
 end
---Other Methods--
+--Other Methods--hola duku
 -- enemy --
 function enemy:move_to(location_x,location_y)
     direction ={(location_x-self.x )/norm(self.x-location_x,self.y-location_y),(location_y-self.y)/norm(self.x-location_x,self.y-location_y)} 
