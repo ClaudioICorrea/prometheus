@@ -48,13 +48,13 @@ end
 function norm(x,y)
     d = (x^2 + y^2)^(0.5)
     return d
-end  
+end
 
 local function StartGame()
 game.state["menu"]= false
 game.state["running"] = true
 end
-
+---hola  luke
 
 
 function love.mousepressed(x, y, button, istouch, presses)
