@@ -7,7 +7,7 @@ require "Utilities"
 player = Object:extend()
 bullets ={}
 --CLASES---
---Clase jugador
+--Clase jugador--luke es muy bonito
 function player:new(x, y, target_x, target_y, velocity, clik_right, click_left,radius)
     self.radius = radius or 30
     self.velocity = velocity or 0
