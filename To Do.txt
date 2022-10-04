@@ -5,8 +5,8 @@ Notacion:
 
 --Paso 1--
 
-#botoncitos deben ser mejores
-#disparos son mejorables
+#La detección de los botones en el menu es dificil de entender
+#Los disparos no desaparecen tras un tiempo extendido.
 
 -- Paso 2--
 

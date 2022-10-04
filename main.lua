@@ -1,4 +1,4 @@
---variables globales pepinos
+--variables globales
 Object = require "lukeclassic"
 local button = require "Buttons"
 require "enemies"
