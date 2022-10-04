@@ -24,7 +24,7 @@ function enemy:shoot()
     d = ((self.target_x-self.x)^2 + (self.target_y-self.y)^2)^(0.5)
     x = (self.target_x-self.x)/d
     y = (self.target_y-self.y)/d
-    bullet = Projectile(self.x,self.y,x,y)
+    bullet = Projectile(self.x,self.y,x,y,self.velocity_shoot)
     return bullet
 end
 
