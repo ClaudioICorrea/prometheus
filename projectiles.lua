@@ -15,15 +15,13 @@ function Projectile:move()
     self.y = self.y + self.direction_y*self.velocity
 end
 
-function Projectile:insert_projectile( ratio, ratio_max, bullets, func)
-    if ratio <= ratio_max then
-        ratio = ratio -1
-            if ratio == 0 then
-                table.insert(bullets, func)
-                ratio = ratio_max
-            end
+function Projectile.insert_projectile( enemy, bullets)
+    ratio = enemy.ratio
+    ratio_max = enemy.max_ratio
+    if ratio == ratio_max then
+        enemy.ratio = 0
+        table.insert(bullets, enemy:shoot())
     end
-    return ratio
 end
 
 

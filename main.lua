@@ -89,8 +89,8 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range,enemy:newRanger(500,16,nil,nil,nil,nil,1))
-    table.insert(enemies_range,enemy:newRanger(500,500,nil,nil,nil,nil,50))
+    table.insert(enemies_range,enemy:newRanger(500,16,nil,nil,nil,nil,1,20))
+    table.insert(enemies_range,enemy:newRanger(500,500,nil,nil,nil,nil,10,40))
     table.insert(enemies_mele,enemy(250,0))
     table.insert(enemies_mele,enemy(350,0))
 end
@@ -130,11 +130,12 @@ function love.update()
             end
         end
         for i,enemy_range in pairs(enemies_range) do
+            enemy_range.ratio = math.min(enemy_range.ratio +1, enemy_range.max_ratio)
             if dist(player1.x, player1.y, enemy_range.x, enemy_range.y) < enemy_range.vision then
                 enemy_range.target_x = player1.x
                 enemy_range.target_y = player1.y
                 enemy_range:move_to(enemy_range.target_x,enemy_range.target_y)
-                enemy_range.ratio = Projectile:insert_projectile(enemy_range.ratio,enemy_range.velocity_shoot, bullets, enemy_range:shoot())    
+                Projectile.insert_projectile(enemy_range, bullets, enemy_range:shoot())
             end
         end
         for i,bullet in ipairs(bullets) do

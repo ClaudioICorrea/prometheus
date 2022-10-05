@@ -37,9 +37,11 @@ function enemy:draw()
 end
 
 function enemy:newRanger(x,y,target_x,target_y,velocity,vision,velocity_shoot,ratio)
-    self.ratio = velocity_shoot or 100
-    self.velocity_shoot = velocity_shoot or 100
     ranger = enemy(x,y,target_x,target_y,velocity,vision)
+    ranger.ratio = 0
+    ranger.max_ratio= ratio or 12
+    ranger.velocity_shoot = velocity_shoot or 5
+
     ranger.isRanger = true
     return ranger
 end
