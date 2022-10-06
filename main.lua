@@ -89,8 +89,8 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range,enemy:newRanger(500,16,nil,nil,nil,nil,1,20))
-    table.insert(enemies_range,enemy:newRanger(500,500,nil,nil,nil,nil,10,40))
+    table.insert(enemies_range,enemy:newRanger(500,20,nil,nil,nil,nil,10,1))
+    table.insert(enemies_range,enemy:newRanger(500,100,nil,nil,nil,nil,10,40))
     table.insert(enemies_mele,enemy(250,0))
     table.insert(enemies_mele,enemy(350,0))
 end
