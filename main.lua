@@ -138,8 +138,11 @@ function love.update()
                 Projectile.insert_projectile(enemy_range, bullets, enemy_range:shoot())
             end
         end
-        for i,bullet in ipairs(bullets) do
+        for i,bullet in pairs(bullets) do
             bullet:move()
+            if (bullet.life==0) then
+                table.remove(bullets,i)
+            end
         end
     end
 end

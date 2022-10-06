@@ -6,7 +6,7 @@ Notacion:
 --Paso 1--
 
 #La detección de los botones en el menu es dificil de entender
-#Los disparos no desaparecen tras un tiempo extendido.
+#Los nombres de las variables dentro del codigo y las paginas no son consistentes
 
 -- Paso 2--
 
