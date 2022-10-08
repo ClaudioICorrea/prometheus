@@ -10,7 +10,7 @@ screen_width = love.graphics.getWidth() --ancho de la ventana
 screen_height = love.graphics.getHeight() --alto de la ventana
 --CLASES---
 --Clase jugador--luke es muy bonito
-function player:new(x, y, target_x, target_y, velocity, click_right, click_left,radius)
+function player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
     self.radius = radius or 30
     self.velocity = velocity or 0
     self.x = x or 0
@@ -42,8 +42,8 @@ local buttons = {
 
 --Other Fuctions--
 
-function dist(x1,y1,x2,y2)
-    d = ((x1-x2)^2 + (y1-y2)^2)^(0.5)
+function dist(x1, y1, x2, y2)
+    d = ((x1 - x2)^2 + (y1 - y2)^2)^(0.5)
     return d
 end
 
@@ -59,12 +59,12 @@ end
 ---hola  luke
 
 
-function love.mousepressed(x, y, button, istouch, presses)
+function love.mousepressed(x, y, button, is_touch, presses)
     if not game.state['running'] then
         if button == 1 then
             if game.state["menu"] then
                 for index in  pairs(buttons.menu_states) do
-                    buttons.menu_states[index]:checkPressed(x, y , player1.radius)
+                    buttons.menu_states[index]:checkPressed(x, y , 1)
                 end
             end
         end
@@ -73,21 +73,21 @@ end
 --Other Methods--hola apu
 -- enemy --
 function enemy:move_to(location_x,location_y)
-    direction ={(location_x-self.x )/norm(self.x-location_x,self.y-location_y),(location_y-self.y)/norm(self.x-location_x,self.y-location_y)}
-    self.x = self.x + direction[1]*self.velocity
-    self.y = self.y + direction[2]*self.velocity
+    direction ={(location_x-self.x) / norm(self.x-location_x,self.y-location_y), (location_y-self.y) / norm(self.x-location_x,self.y-location_y)}
+    self.x = self.x + direction[1] * self.velocity
+    self.y = self.y + direction[2] * self.velocity
 end
 
 --cargar
 function love.load()
     --jugador---
-    player1 = player(750,600,50,50,5,5)
+    player1 = player(750, 600, 50, 50, 5, 5)
     --menu--
     buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50)
     buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50)
     buttons.menu_states.exit_game = newButton("Exit Game", love.event.quit, nil, 110, 50)
     buttons.menu_states.restart_game = newButton("Re-start", nil, nil, 110, 50)
-    --esenario--
+    --escenario--
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
@@ -101,16 +101,16 @@ function love.update()
     --movimientos del jugador--
     if game.state["running"] then
         if love.keyboard.isDown("w") then
-            player1.y = player1.y - 1*player1.velocity
+            player1.y = player1.y - 1 * player1.velocity
         end
         if love.keyboard.isDown("s") then
-            player1.y = player1.y + 1*player1.velocity
+            player1.y = player1.y + 1 * player1.velocity
         end
         if love.keyboard.isDown("a") then
-            player1.x = player1.x - 1*player1.velocity
+            player1.x = player1.x - 1 * player1.velocity
         end
         if love.keyboard.isDown("d") then
-            player1.x = player1.x + 1*player1.velocity
+            player1.x = player1.x + 1 * player1.velocity
         end
         if love.keyboard.isDown("m") then
             game.state["menu"]= true
@@ -128,22 +128,22 @@ function love.update()
             if dist(player1.x, player1.y, enemy_mele.x, enemy_mele.y) < enemy_mele.vision then
                 enemy_mele.target_x = player1.x
                 enemy_mele.target_y = player1.y
-                enemy_mele:move_to(enemy_mele.target_x,enemy_mele.target_y)
+                enemy_mele:move_to(enemy_mele.target_x, enemy_mele.target_y)
             end
         end
         for i,enemy_range in pairs(enemies_range) do
-            enemy_range.ratio = math.min(enemy_range.ratio +1, enemy_range.max_ratio)
+            enemy_range.ratio = math.min(enemy_range.ratio + 1, enemy_range.max_ratio)
             if dist(player1.x, player1.y, enemy_range.x, enemy_range.y) < enemy_range.vision then
                 enemy_range.target_x = player1.x
                 enemy_range.target_y = player1.y
-                enemy_range:move_to(enemy_range.target_x,enemy_range.target_y)
+                enemy_range:move_to(enemy_range.target_x, enemy_range.target_y)
                 Projectile.insert_projectile(enemy_range, bullets, enemy_range:shoot())
             end
         end
         for i,bullet in pairs(bullets) do
             bullet:move()
-            if (bullet.life==0) then
-                table.remove(bullets,i)
+            if (bullet.life == 0) then
+                table.remove(bullets, i)
             end
         end
     end
@@ -153,7 +153,7 @@ function love.draw()
     if game.state["running"] then
     -- Dibujar Jugador 1 --
         love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
-        square_draw("fill", player1.x , player1.y ,20,20)
+        square_draw("fill", player1.x, player1.y, 20, 20)
         love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
         if player1.click_right then
             love.graphics.setColor(1, 0, 0)

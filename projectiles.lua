@@ -2,7 +2,7 @@ Object = require "lukeclassic"
 
 Projectile = Object:extend()
 
-function Projectile:new(x,y,dir_x,dir_y,velocity)
+function Projectile:new(x, y, dir_x, dir_y, velocity)
     self.x = x or 0
     self.y = y or 0
     self.direction_x = dir_x or 1
@@ -12,12 +12,12 @@ function Projectile:new(x,y,dir_x,dir_y,velocity)
 end
 
 function Projectile:move()
-    self.x = self.x + self.direction_x*self.velocity
-    self.y = self.y + self.direction_y*self.velocity
-    self.life = self.life -1
+    self.x = self.x + self.direction_x * self.velocity
+    self.y = self.y + self.direction_y  *self.velocity
+    self.life = self.life - 1
 end
 
-function Projectile.insert_projectile( enemy, bullets)
+function Projectile.insert_projectile(enemy, bullets)
     ratio = enemy.ratio
     ratio_max = enemy.max_ratio
     if ratio == ratio_max then
@@ -28,6 +28,5 @@ end
 
 
 function Projectile:draw()
-    love.graphics.circle("line",self.x, self.y, 10)
+    love.graphics.circle("line", self.x, self.y, 10)
 end
-
