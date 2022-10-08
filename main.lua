@@ -4,12 +4,14 @@ local button = require "Buttons"
 require "enemies"
 require "projectiles"
 require "Utilities"
+require "Buttons2"
+
 player = Object:extend()
 bullets ={}
 screen_width = love.graphics.getWidth() --ancho de la ventana
 screen_height = love.graphics.getHeight() --alto de la ventana
 --CLASES---
---Clase jugador--luke es muy bonito
+--Clase jugador--
 function player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
     self.radius = radius or 30
     self.velocity = velocity or 0
@@ -21,6 +23,7 @@ function player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.click_left = click_left or false
 end
 
+botoncito = Button("HOLA", function(param) love.mouse.setX( param) end, 500, 200,50,30,30)
 
 -- Menu --
 local game = {
@@ -42,16 +45,6 @@ local buttons = {
 
 --Other Fuctions--
 
-function dist(x1, y1, x2, y2)
-    d = ((x1 - x2)^2 + (y1 - y2)^2)^(0.5)
-    return d
-end
-
-function norm(x,y)
-    d = (x^2 + y^2)^(0.5)
-    return d
-end
-
 local function StartGame()
 game.state["menu"]= false
 game.state["running"] = true
@@ -63,6 +56,7 @@ function love.mousepressed(x, y, button, is_touch, presses)
     if not game.state['running'] then
         if button == 1 then
             if game.state["menu"] then
+                botoncito:_check_click()
                 for index in  pairs(buttons.menu_states) do
                     buttons.menu_states[index]:checkPressed(x, y , 1)
                 end
@@ -150,6 +144,7 @@ function love.update()
 end
 --dibujar
 function love.draw()
+    botoncito:draw()
     if game.state["running"] then
     -- Dibujar Jugador 1 --
         love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
