@@ -1,11 +1,9 @@
 --variables globales
 Object = require "lukeclassic"
-local button = require "Buttons"
 require "enemies"
 require "projectiles"
 require "Utilities"
-require "Buttons2"
-
+require "Buttons"
 player = Object:extend()
 bullets ={}
 screen_width = love.graphics.getWidth() --ancho de la ventana
@@ -23,10 +21,10 @@ function player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.click_left = click_left or false
 end
 
-botoncito = Button("HOLA", function(param) love.mouse.setX( param) end, 500, 200,50,30,30)
+
 
 -- Menu --
-local game = {
+game = {
     state = {
         menu = true,
         paused = false,
@@ -35,41 +33,20 @@ local game = {
     }
 }
 
-
-
-
-local buttons = {
-    menu_states = {}
-}
-
-
 --Other Fuctions--
 
-local function StartGame()
-game.state["menu"]= false
-game.state["running"] = true
-end
----hola  luke
 
 
-function love.mousepressed(x, y, button, is_touch, presses)
+function love.mousepressed(x, y, pressed_button, is_touch, presses)
     if not game.state['running'] then
-        if button == 1 then
+        if pressed_button == 1 then
             if game.state["menu"] then
-                botoncito:_check_click()
-                for index in  pairs(buttons.menu_states) do
-                    buttons.menu_states[index]:checkPressed(x, y , 1)
+                for i,button in ipairs(buttons) do
+                    button:_check_click()
                 end
             end
         end
     end
-end
---Other Methods--hola apu
--- enemy --
-function enemy:move_to(location_x,location_y)
-    direction ={(location_x-self.x) / norm(self.x-location_x,self.y-location_y), (location_y-self.y) / norm(self.x-location_x,self.y-location_y)}
-    self.x = self.x + direction[1] * self.velocity
-    self.y = self.y + direction[2] * self.velocity
 end
 
 --cargar
@@ -77,10 +54,20 @@ function love.load()
     --jugador---
     player1 = player(750, 600, 50, 50, 5, 5)
     --menu--
-    buttons.menu_states.play_game = newButton("Play Game", StartGame , nil, 110, 50)
-    buttons.menu_states.setting = newButton("Setting", nil, nil, 110, 50)
-    buttons.menu_states.exit_game = newButton("Exit Game", love.event.quit, nil, 110, 50)
-    buttons.menu_states.restart_game = newButton("Re-start", nil, nil, 110, 50)
+    buttons ={}
+    table.insert(buttons,Button("Play Game",
+            function()
+                game.state["menu"]= false
+                game.state["running"] = true
+            end
+    , nil, 110, 50,screen_width / 2 - 55, screen_height / 7 ))
+    table.insert(buttons,Button("Settings", nil, nil, 110, 50,screen_width / 2 - 55, 2 * screen_height / 7 ))
+    table.insert(buttons,Button("Exit Game",
+            function(event_status)
+                love.event.quit(event_status )
+            end
+    , 0, 110, 50,screen_width / 2 - 55, 3 * screen_height / 7 ))
+    table.insert(buttons,Button("Re-Start", nil, nil, 110, 50,screen_width / 2 - 55, 4 * screen_height / 7 ))
     --escenario--
     --enemigos y npc--
     enemies_mele = {}
@@ -144,7 +131,7 @@ function love.update()
 end
 --dibujar
 function love.draw()
-    botoncito:draw()
+
     if game.state["running"] then
     -- Dibujar Jugador 1 --
         love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
@@ -170,9 +157,8 @@ function love.draw()
     end
     elseif game.state["menu"] then
         love.graphics.print("MENU", screen_width / 2 - 25, 10)
-        buttons.menu_states.play_game:draw(screen_width / 2 - 55, screen_height / 7 * 1, 20, 20)
-        buttons.menu_states.setting:draw(screen_width / 2 - 55, screen_height / 7 * 2, 20, 20)
-        buttons.menu_states.exit_game:draw(screen_width / 2 - 55, screen_height / 7 * 3, 20, 20)
-        buttons.menu_states.restart_game:draw(screen_width / 2 - 55, screen_height / 7 * 4, 20, 20)
+        for i,button in ipairs(buttons) do
+            button:draw()
+        end
     end
 end
