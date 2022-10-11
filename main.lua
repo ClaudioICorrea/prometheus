@@ -3,7 +3,7 @@ Object = require "lukeclassic"
 local button = require "Buttons"
 require "enemies"
 require "projectiles"
-require "Utilities"
+require "Tools"
 player = Object:extend()
 bullets ={}
 screen_width = love.graphics.getWidth() --ancho de la ventana
@@ -42,15 +42,7 @@ local buttons = {
 
 --Other Fuctions--
 
-function dist(x1, y1, x2, y2)
-    d = ((x1 - x2)^2 + (y1 - y2)^2)^(0.5)
-    return d
-end
 
-function norm(x,y)
-    d = (x^2 + y^2)^(0.5)
-    return d
-end
 
 local function StartGame()
 game.state["menu"]= false
@@ -91,8 +83,8 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range,enemy:newRanger(500,20,nil,nil,nil,nil,10,1))
-    table.insert(enemies_range,enemy:newRanger(500,100,nil,nil,nil,nil,10,40))
+    table.insert(enemies_range,enemy:newRanger(500,20,nil,nil,nil,nil,10,1,100))
+    table.insert(enemies_range,enemy:newRanger(500,100,nil,nil,nil,nil,10,40,300))
     table.insert(enemies_mele,enemy(250,0))
     table.insert(enemies_mele,enemy(350,0))
 end
@@ -142,9 +134,7 @@ function love.update()
         end
         for i,bullet in pairs(bullets) do
             bullet:move()
-            if (bullet.life == 0) then
-                table.remove(bullets, i)
-            end
+            bullet:kill_projectile(bullets, i)
         end
     end
 end
