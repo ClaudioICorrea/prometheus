@@ -22,11 +22,6 @@ game = {
     }
 }
 
-local function StartGame()
-game.state["menu"]= false
-game.state["running"] = true
-end
-
 
 function love.mousepressed(x, y, pressed_button, is_touch, presses)
     if not game.state['running'] then
@@ -63,15 +58,15 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range,enemy:newRanger(500,20,nil,nil,nil,nil,10,1,100))
-    table.insert(enemies_range,enemy:newRanger(500,100,nil,nil,nil,nil,10,40,300))
+    table.insert(enemies_range,enemy:_new_ranger(500,20,nil,nil,nil,nil,10,1,100))
+    table.insert(enemies_range,enemy:_new_ranger(500,100,nil,nil,nil,nil,10,40,300))
     table.insert(enemies_mele,enemy(250,0))
     table.insert(enemies_mele,enemy(350,0))
 end
 
 function love.update()
     --movimientos del jugador--
-    player1:move()
+    player1:_move()
 
     --movimientos del los enemigos--
     if game.state["running"] then
@@ -79,7 +74,7 @@ function love.update()
             if dist(player1.x, player1.y, enemy_mele.x, enemy_mele.y) < enemy_mele.vision then
                 enemy_mele.target_x = player1.x
                 enemy_mele.target_y = player1.y
-                enemy_mele:move_to(enemy_mele.target_x, enemy_mele.target_y)
+                enemy_mele:_move_to(enemy_mele.target_x, enemy_mele.target_y)
             end
         end
         for i,enemy_range in pairs(enemies_range) do
@@ -87,13 +82,13 @@ function love.update()
             if dist(player1.x, player1.y, enemy_range.x, enemy_range.y) < enemy_range.vision then
                 enemy_range.target_x = player1.x
                 enemy_range.target_y = player1.y
-                enemy_range:move_to(enemy_range.target_x, enemy_range.target_y)
-                Projectile.insert_projectile(enemy_range, bullets, enemy_range:shoot())
+                enemy_range:_move_to(enemy_range.target_x, enemy_range.target_y)
+                Projectile._insert_projectile(enemy_range, bullets, enemy_range:_shoot())
             end
         end
         for i,bullet in pairs(bullets) do
-            bullet:move()
-            bullet:kill_projectile(bullets, i)
+            bullet:_move()
+            bullet:_kill_projectile(bullets, i)
         end
     end
 end

@@ -14,13 +14,13 @@ function enemy:new(x, y, target_x, target_y, velocity, vision)
     self.is_ranger = false
 end
 
-function enemy:move_to(location_x, location_y)
+function enemy:_move_to(location_x, location_y)
     direction ={(location_x - self.x ) / norm(self.x - location_x, self.y - location_y), (location_y - self.y) / norm(self.x - location_x, self.y - location_y)}
     self.x = self.x + direction[1]*self.velocity
     self.y = self.y + direction[2]*self.velocity
 end
 
-function enemy:shoot()
+function enemy:_shoot()
     d = ((self.target_x - self.x)^2 + (self.target_y - self.y)^2)^(0.5)
     x = (self.target_x - self.x) / d
     y = (self.target_y - self.y) / d
@@ -36,7 +36,7 @@ function enemy:draw()
     end
 end
 
-function enemy:newRanger(x, y, target_x, target_y, velocity, vision, velocity_shoot, ratio, range)
+function enemy:_new_ranger(x, y, target_x, target_y, velocity, vision, velocity_shoot, ratio, range)
     ranger = enemy(x, y, target_x, target_y, velocity, vision)
     ranger.range = range or 10
     ranger.ratio = 0

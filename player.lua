@@ -1,5 +1,7 @@
 Object = require("lukeclassic")
 player = Object:extend()
+
+
 function player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
     self.radius = radius or 30
     self.velocity = velocity or 0
@@ -11,7 +13,7 @@ function player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.click_left = click_left or false
 end
 
-function player:move()
+function player:_move()
     if game.state["running"] then
         if love.keyboard.isDown("w") then
             self.y = self.y - 1 * self.velocity
