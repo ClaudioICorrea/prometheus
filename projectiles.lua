@@ -1,5 +1,5 @@
 Object = require "lukeclassic"
-require "Tools"
+require "tools"
 
 Projectile = Object:extend()
 

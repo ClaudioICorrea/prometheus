@@ -1,5 +1,5 @@
 Object = require "lukeclassic"
-require "Tools"
+require "tools"
 
 enemy = Object:extend()
 

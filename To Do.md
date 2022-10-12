@@ -7,9 +7,7 @@
 ```
 ### Paso 1
 
-\#La detección de los botones en el menu es dificil de entender
-
-\#Los nombres de las variables dentro del codigo y las paginas no son consistentes
+/#Los nombres de las variables dentro del codigo y las paginas no son consistentes
 
 ### Paso 2
 
@@ -19,9 +17,11 @@
 
 \# Sistema de vida y daño
 
-\# Que los disparos mueran
+\# Que los disparos mueran, al colisionar con colliders y jugador
 
-\# Zonas detectables
+\# Zonas detectables, es decir areas que nos permitan saber si el player está en ellas como puede ser un radio de explosión
+
+\# Sistema de maejo de inputs defunciones, para evitar tener que poner varios valores nil
 
 ### Paso 3
 

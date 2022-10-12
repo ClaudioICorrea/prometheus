@@ -2,29 +2,14 @@
 Object = require "lukeclassic"
 require "enemies"
 require "projectiles"
-<<<<<<< HEAD
-require "Utilities"
-require "Buttons"
-=======
-require "Tools"
->>>>>>> 1b19500ed0408db47345cd96aa53aec5540f04c9
-player = Object:extend()
+require "buttons"
+require "tools"
+require "player"
+
+
 bullets ={}
 screen_width = love.graphics.getWidth() --ancho de la ventana
 screen_height = love.graphics.getHeight() --alto de la ventana
---CLASES---
---Clase jugador--
-function player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
-    self.radius = radius or 30
-    self.velocity = velocity or 0
-    self.x = x or 0
-    self.y = y or 0
-    self.target_x = target_x or 0
-    self.target_y = target_y or 0
-    self.click_right = click_right or false
-    self.click_left = click_left or false
-end
-
 
 
 -- Menu --
@@ -37,18 +22,10 @@ game = {
     }
 }
 
---Other Fuctions--
-
-<<<<<<< HEAD
-=======
-
-
 local function StartGame()
 game.state["menu"]= false
 game.state["running"] = true
 end
----hola  luke
->>>>>>> 1b19500ed0408db47345cd96aa53aec5540f04c9
 
 
 function love.mousepressed(x, y, pressed_button, is_touch, presses)
@@ -94,28 +71,7 @@ end
 
 function love.update()
     --movimientos del jugador--
-    if game.state["running"] then
-        if love.keyboard.isDown("w") then
-            player1.y = player1.y - 1 * player1.velocity
-        end
-        if love.keyboard.isDown("s") then
-            player1.y = player1.y + 1 * player1.velocity
-        end
-        if love.keyboard.isDown("a") then
-            player1.x = player1.x - 1 * player1.velocity
-        end
-        if love.keyboard.isDown("d") then
-            player1.x = player1.x + 1 * player1.velocity
-        end
-        if love.keyboard.isDown("m") then
-            game.state["menu"]= true
-            game.state["running"] = false
-        end
-    end
-    player1.target_x = love.mouse.getX() -- ubicacion del mouse en x
-    player1.target_y = love.mouse.getY() -- ubicacion del mouse en y
-    player1.click_right = love.mouse.isDown(1)
-    player1.click_left = love.mouse.isDown(2)
+    player1:move()
 
     --movimientos del los enemigos--
     if game.state["running"] then
@@ -146,16 +102,7 @@ function love.draw()
 
     if game.state["running"] then
     -- Dibujar Jugador 1 --
-        love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
-        square_draw("fill", player1.x, player1.y, 20, 20)
-        love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
-        if player1.click_right then
-            love.graphics.setColor(1, 0, 0)
-        end
-        if player1.click_left then
-            love.graphics.setColor(0, 1, 0)
-        end
-        love.graphics.circle("line", player1.target_x, player1.target_y, 10) --dibuja un circulo
+    player1:draw()
     -- Dibujar Enemigos
     love.graphics.setColor(360, 360, 360)
     for i,enemy_mele in pairs(enemies_mele) do
