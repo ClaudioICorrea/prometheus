@@ -1,5 +1,5 @@
 Object = require "lukeclassic"
-require "Utilities"
+require "Tools"
 
 enemy = Object:extend()
 
@@ -24,7 +24,7 @@ function enemy:shoot()
     d = ((self.target_x - self.x)^2 + (self.target_y - self.y)^2)^(0.5)
     x = (self.target_x - self.x) / d
     y = (self.target_y - self.y) / d
-    bullet = Projectile(self.x, self.y, x, y, self.velocity_shoot)
+    bullet = Projectile(self.x, self.y, x, y, self.velocity_shoot,self.range)
     return bullet
 end
 
@@ -36,12 +36,12 @@ function enemy:draw()
     end
 end
 
-function enemy:newRanger(x, y, target_x, target_y, velocity, vision, velocity_shoot, ratio)
+function enemy:newRanger(x, y, target_x, target_y, velocity, vision, velocity_shoot, ratio, range)
     ranger = enemy(x, y, target_x, target_y, velocity, vision)
+    ranger.range = range or 10
     ranger.ratio = 0
     ranger.max_ratio= ratio or 12
     ranger.velocity_shoot = velocity_shoot or 5
-
     ranger.is_ranger = true
     return ranger
 end

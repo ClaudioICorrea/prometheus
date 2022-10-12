@@ -2,8 +2,12 @@
 Object = require "lukeclassic"
 require "enemies"
 require "projectiles"
+<<<<<<< HEAD
 require "Utilities"
 require "Buttons"
+=======
+require "Tools"
+>>>>>>> 1b19500ed0408db47345cd96aa53aec5540f04c9
 player = Object:extend()
 bullets ={}
 screen_width = love.graphics.getWidth() --ancho de la ventana
@@ -35,6 +39,16 @@ game = {
 
 --Other Fuctions--
 
+<<<<<<< HEAD
+=======
+
+
+local function StartGame()
+game.state["menu"]= false
+game.state["running"] = true
+end
+---hola  luke
+>>>>>>> 1b19500ed0408db47345cd96aa53aec5540f04c9
 
 
 function love.mousepressed(x, y, pressed_button, is_touch, presses)
@@ -72,8 +86,8 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range,enemy:newRanger(500,20,nil,nil,nil,nil,10,1))
-    table.insert(enemies_range,enemy:newRanger(500,100,nil,nil,nil,nil,10,40))
+    table.insert(enemies_range,enemy:newRanger(500,20,nil,nil,nil,nil,10,1,100))
+    table.insert(enemies_range,enemy:newRanger(500,100,nil,nil,nil,nil,10,40,300))
     table.insert(enemies_mele,enemy(250,0))
     table.insert(enemies_mele,enemy(350,0))
 end
@@ -123,9 +137,7 @@ function love.update()
         end
         for i,bullet in pairs(bullets) do
             bullet:move()
-            if (bullet.life == 0) then
-                table.remove(bullets, i)
-            end
+            bullet:kill_projectile(bullets, i)
         end
     end
 end
