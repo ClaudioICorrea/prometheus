@@ -38,7 +38,7 @@ end
 --cargar
 function love.load()
     --jugador---
-    player1 = player(750, 600, 50, 50, 5, 5)
+    player1 = Player(750, 600, 50, 50, 5, 5)
     --menu--
     buttons ={}
     table.insert(buttons,Button("Play Game",
@@ -58,10 +58,10 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range,enemy:_new_ranger(500,20,nil,nil,nil,nil,10,1,100))
-    table.insert(enemies_range,enemy:_new_ranger(500,100,nil,nil,nil,nil,10,40,300))
-    table.insert(enemies_mele,enemy(250,0))
-    table.insert(enemies_mele,enemy(350,0))
+    table.insert(enemies_range, Enemy:_new_ranger(500,20,nil,nil,nil,nil,10,1,100))
+    table.insert(enemies_range, Enemy:_new_ranger(500,100,nil,nil,nil,nil,10,40,300))
+    table.insert(enemies_mele, Enemy(250,0))
+    table.insert(enemies_mele, Enemy(350,0))
 end
 
 function love.update()

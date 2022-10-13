@@ -283,33 +283,35 @@ A common problem people have with using 2D physics engines seems to be getting o
 
 ```lua
 function love.load()
-  world = wf.newWorld(0, 512, true)
-  world:addCollisionClass('Platform')
-  world:addCollisionClass('Player')
-  
-  ground = world:newRectangleCollider(100, 500, 600, 50)
-  ground:setType('static')
-  platform = world:newRectangleCollider(350, 400, 100, 20)
-  platform:setType('static')
-  platform:setCollisionClass('Platform')
-  player = world:newRectangleCollider(390, 450, 20, 40)
-  player:setCollisionClass('Player')
-  
-  player:setPreSolve(function(collider_1, collider_2, contact)        
-    if collider_1.collision_class == 'Player' and collider_2.collision_class == 'Platform' then
-      local px, py = collider_1:getPosition()            
-      local pw, ph = 20, 40            
-      local tx, ty = collider_2:getPosition() 
-      local tw, th = 100, 20
-      if py + ph/2 > ty - th/2 then contact:setEnabled(false) end
-    end   
-  end)
+    world = wf.newWorld(0, 512, true)
+    world:addCollisionClass('Platform')
+    world:addCollisionClass('Player')
+
+    ground = world:newRectangleCollider(100, 500, 600, 50)
+    ground:setType('static')
+    platform = world:newRectangleCollider(350, 400, 100, 20)
+    platform:setType('static')
+    platform:setCollisionClass('Platform')
+    Player = world:newRectangleCollider(390, 450, 20, 40)
+    Player:setCollisionClass('Player')
+
+    Player:setPreSolve(function(collider_1, collider_2, contact)
+        if collider_1.collision_class == 'Player' and collider_2.collision_class == 'Platform' then
+            local px, py = collider_1:getPosition()
+            local pw, ph = 20, 40
+            local tx, ty = collider_2:getPosition()
+            local tw, th = 100, 20
+            if py + ph / 2 > ty - th / 2 then
+                contact:setEnabled(false)
+            end
+        end
+    end)
 end
 
 function love.keypressed(key)
-  if key == 'space' then
-    player:applyLinearImpulse(0, -1000)
-  end
+    if key == 'space' then
+        Player:applyLinearImpulse(0, -1000)
+    end
 end
 ```
 

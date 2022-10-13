@@ -1,8 +1,8 @@
 Object = require("lukeclassic")
-player = Object:extend()
+Player = Object:extend()
 
 
-function player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
+function Player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
     self.radius = radius or 30
     self.velocity = velocity or 0
     self.x = x or 0
@@ -13,7 +13,7 @@ function player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.click_left = click_left or false
 end
 
-function player:_move()
+function Player:_move()
     if game.state["running"] then
         if love.keyboard.isDown("w") then
             self.y = self.y - 1 * self.velocity
@@ -38,7 +38,7 @@ function player:_move()
     self.click_left = love.mouse.isDown(2)
 end
 
-function player:draw()
+function Player:draw()
     love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
     square_draw("fill", self.x, self.y, 20, 20)
     love.graphics.setColor(360, 360, 360) --dibujar en el color indicado

@@ -5,10 +5,6 @@
 @ Cosas que queremos hacer pero estan mal definidas
 & Posibles tareas pero no garantizadas
 ```
-### Paso 1
-
-/#Los nombres de las variables dentro del codigo y las paginas no son consistentes
-
 ### Paso 2
 
 \# Colliders, para personajes y muros
