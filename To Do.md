@@ -5,9 +5,11 @@
 @ Cosas que queremos hacer pero estan mal definidas
 & Posibles tareas pero no garantizadas
 ```
+---
+
 ### Paso 2
 
-\# Colliders, para personajes y muros
+ \# Colliders, para personajes y muros
 
 \# Puertas y paredes son tipos de muro
 
@@ -19,6 +21,7 @@
 
 \# Sistema de maejo de inputs defunciones, para evitar tener que poner varios valores nil
 
+---
 ### Paso 3
 
 \# Diversificar lo ya hecho (crear paredes más complejas entre otros)
@@ -29,4 +32,8 @@
 
 & Crear Items y objetos del ambiente 
 
-& Inventario
+& Inventario 
+
+---
+
+[no abrir](https://youtu.be/dQw4w9WgXcQ)
