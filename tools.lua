@@ -14,15 +14,16 @@ function norm(x,y)
     return d
 end
 
-function object_helper(object, values_table)
-    for i,value_entry in pairs(values_table) do
-        property = value_entry[1]
-        value = value_entry[2]
+function _helper(object, values_table)
+    for index=1,#values_table,2  do
+        property = values_table[index]
+        value = values_table[index + 1]
         for property_name,property_value in pairs(object) do
             if property_name == property then
                 object[property_name] = value
             end
         end
     end
+    return object
 end
 

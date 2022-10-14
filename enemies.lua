@@ -39,8 +39,8 @@ end
 function Enemy:_new_ranger(x, y, target_x, target_y, velocity, vision, velocity_shoot, ratio, range)
     ranger = Enemy(x, y, target_x, target_y, velocity, vision)
     ranger.range = range or 10
-    ranger.ratio = 0
-    ranger.max_ratio= ratio or 12
+    ranger.ratio = ratio or 0
+    ranger.max_ratio= ranger.ratio
     ranger.velocity_shoot = velocity_shoot or 5
     ranger.is_ranger = true
     return ranger
