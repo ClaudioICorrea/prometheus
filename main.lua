@@ -66,7 +66,7 @@ function love.load()
     print(player1.radius)
     object_helper(player1,{{"radius", 10}})
     print(player1.radius)
-endgit
+end
 
 function love.update()
     --movimientos del jugador--
