@@ -5,7 +5,7 @@ function Button:new(text, func, param, width, height, x_pos, y_pos, font)
     self.width = width or 100
     self.height = height or 100
     self.func = func or function() print("Este Boton no tiene funcionalidad") end
-    self.param = param
+    self.param = param or nil
     self.text = text or "sin texto"
     self.button_x = x_pos or 0
     self.button_y = y_pos or 0

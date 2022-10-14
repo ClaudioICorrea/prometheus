@@ -13,3 +13,15 @@ function norm(x,y)
     d = (x^2 + y^2)^(0.5)
     return d
 end
+
+function object_helper(object, property, value)
+
+    for property_name,property_value in pairs(object) do
+        if property_name == property then
+            object[property_name] = value
+        end
+    end
+
+
+end
+

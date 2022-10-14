@@ -62,7 +62,11 @@ function love.load()
     table.insert(enemies_range, Enemy:_new_ranger(500,100,nil,nil,nil,nil,10,40,300))
     table.insert(enemies_mele, Enemy(250,0))
     table.insert(enemies_mele, Enemy(350,0))
-end
+    print("loading")
+    print(player1.radius)
+    object_helper(player1,{{"radius", 10}})
+    print(player1.radius)
+endgit
 
 function love.update()
     --movimientos del jugador--
