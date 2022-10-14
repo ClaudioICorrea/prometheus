@@ -19,8 +19,6 @@
 
 \# Zonas detectables, es decir areas que nos permitan saber si el player está en ellas como puede ser un radio de explosión
 
-\# Sistema de maejo de inputs defunciones, para evitar tener que poner varios valores nil
-
 ---
 ### Paso 3
 
