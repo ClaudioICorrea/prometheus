@@ -40,7 +40,8 @@ end
 
 function Player:draw()
     love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
-    square_draw("fill", self.x, self.y, 20, 20)
+    --square_draw("fill", self.x, self.y, 20, 20)
+    love.graphics.circle("fill", self.x, self.y, 10)
     love.graphics.setColor(360, 360, 360) --dibujar en el color indicado
     if self.click_right then
         love.graphics.setColor(1, 0, 0)

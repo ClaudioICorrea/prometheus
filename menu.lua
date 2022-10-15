@@ -1,4 +1,4 @@
---Object = require("lukeclassic")
+
 require "buttons"
 
 function love.mousepressed(x, y, pressed_button, is_touch, presses)

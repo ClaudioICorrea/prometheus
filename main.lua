@@ -4,7 +4,9 @@ require "enemies"
 require "projectiles"
 require "tools"
 require "player"
+require "wall"
 require "menu"
+require "physics"
 
 
 bullets ={}
@@ -22,23 +24,19 @@ game = {
     }
 }
 
-
-
-
---cargar
 function love.load()
-    --jugador---
-    player1 = Player(750, 600, 50, 50, 5, 5)
-    --menu--
-    load_menu()
+    player1 = Player(750, 600, 50, 50, 5, 5)-- jugador
+    load_menu() -- menu
     --escenario--
+    wall_word = {}
+    table.insert(wall_word, _helper(Wall(),{"x_0", 50, "y_0", 50, "x_f", 700, "y_f", 180}))
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
-    table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
-    table.insert(enemies_mele, Enemy(250,0))
-    table.insert(enemies_mele, Enemy(350,0))
+    --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
+    --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
+    --table.insert(enemies_mele, Enemy(250,0))
+    --table.insert(enemies_mele, Enemy(350,0))
 end
 
 function love.update()
@@ -68,24 +66,38 @@ function love.update()
             bullet:_kill_projectile(bullets, i)
         end
     end
+    --experimento
+    for i,wall in pairs(wall_word) do
+        ejem=projet_in_wall(player1,wall)
+        ejem_x =ejem[1]
+        ejem_y =ejem[2]
+        print(ejem_x,ejem_y)
+    end
 end
 --dibujar
 function love.draw()
 
     if game.state["running"] then
-    -- Dibujar Jugador 1 --
-    player1:draw()
-    -- Dibujar Enemigos
-    love.graphics.setColor(360, 360, 360)
-    for i,enemy_mele in pairs(enemies_mele) do
-        enemy_mele:draw()
-    end
+        -- Dibujar Jugador 1 --
+        player1:draw()
+        -- Dibujar Enemigos
+        love.graphics.setColor(360, 360, 360)
+        for i,enemy_mele in pairs(enemies_mele) do
+            enemy_mele:draw()
+        end
         for i,enemy in pairs(enemies_range) do
             enemy:draw()
         end
-    for i,bullet in ipairs(bullets) do
-        bullet:draw()
-    end
+        for i,bullet in ipairs(bullets) do
+            bullet:draw()
+        end
+        --Dibujar escenario 
+        for i,wall in ipairs(wall_word) do
+            wall:draw()
+        end
+        --experimento 
+        love.graphics.circle("fill",ejem_x, ejem_y, 10)
+        --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then
         draw_menu()        
     end
