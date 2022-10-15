@@ -2,9 +2,9 @@
 Object = require "lukeclassic"
 require "enemies"
 require "projectiles"
-require "buttons"
 require "tools"
 require "player"
+require "menu"
 
 
 bullets ={}
@@ -12,7 +12,7 @@ screen_width = love.graphics.getWidth() --ancho de la ventana
 screen_height = love.graphics.getHeight() --alto de la ventana
 
 
--- Menu --
+-- Estados de Juego --
 game = {
     state = {
         menu = true,
@@ -23,37 +23,14 @@ game = {
 }
 
 
-function love.mousepressed(x, y, pressed_button, is_touch, presses)
-    if not game.state['running'] then
-        if pressed_button == 1 then
-            if game.state["menu"] then
-                for i,button in ipairs(buttons) do
-                    button:_check_click()
-                end
-            end
-        end
-    end
-end
+
 
 --cargar
 function love.load()
     --jugador---
     player1 = Player(750, 600, 50, 50, 5, 5)
     --menu--
-    buttons ={}
-    table.insert(buttons,Button("Play Game",
-            function()
-                game.state["menu"]= false
-                game.state["running"] = true
-            end
-    , nil, 110, 50,screen_width / 2 - 55, screen_height / 7 ))
-    table.insert(buttons,Button("Settings", nil, nil, 110, 50,screen_width / 2 - 55, 2 * screen_height / 7 ))
-    table.insert(buttons,Button("Exit Game",
-            function(event_status)
-                love.event.quit(event_status )
-            end
-    , 0, 110, 50,screen_width / 2 - 55, 3 * screen_height / 7 ))
-    table.insert(buttons,Button("Re-Start", nil, nil, 110, 50,screen_width / 2 - 55, 4 * screen_height / 7 ))
+    load_menu()
     --escenario--
     --enemigos y npc--
     enemies_mele = {}
@@ -110,9 +87,6 @@ function love.draw()
         bullet:draw()
     end
     elseif game.state["menu"] then
-        love.graphics.print("MENU", screen_width / 2 - 25, 10)
-        for i,button in ipairs(buttons) do
-            button:draw()
-        end
+        draw_menu()        
     end
 end
