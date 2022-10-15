@@ -30,6 +30,11 @@ function love.load()
     --escenario--
     wall_word = {}
     table.insert(wall_word, _helper(Wall(),{"x_0", 50, "y_0", 50, "x_f", 700, "y_f", 180}))
+    table.insert(wall_word, _helper(Wall(),{"x_0", 0, "y_0", 0, "x_f", 0, "y_f", 700}))
+    table.insert(wall_word, _helper(Wall(),{"x_0", 0, "y_0", 0, "x_f", 700, "y_f", 0 }))
+    table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 300, "x_f", 700, "y_f", 0 }))
+    table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 700, "x_f", 800, "y_f", 0 }))
+    --table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 10, "x_f", 700, "y_f", 200 }))
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
@@ -67,12 +72,7 @@ function love.update()
         end
     end
     --experimento
-    for i,wall in pairs(wall_word) do
-        ejem=projet_in_wall(player1,wall)
-        ejem_x =ejem[1]
-        ejem_y =ejem[2]
-        print(ejem_x,ejem_y)
-    end
+    
 end
 --dibujar
 function love.draw()
@@ -91,12 +91,16 @@ function love.draw()
         for i,bullet in ipairs(bullets) do
             bullet:draw()
         end
-        --Dibujar escenario 
-        for i,wall in ipairs(wall_word) do
+        --Dibujar escenario (experimento)
+        for i,wall in pairs(wall_word) do
             wall:draw()
+            ejem=project_in_wall(player1,wall)
+            ejem_x =ejem[1]
+            ejem_y =ejem[2]
+            love.graphics.circle("fill",ejem_x, ejem_y, 10)
         end
         --experimento 
-        love.graphics.circle("fill",ejem_x, ejem_y, 10)
+        
         --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then
         draw_menu()        

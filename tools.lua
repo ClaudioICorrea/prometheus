@@ -18,11 +18,21 @@ function dist(x1, y1, x2, y2) -- distancia entre 2 elementos
     return d
 end
 
-function projet_in_wall(object,wall)
-    C=doti(object.x-wall.x_0,object.y-wall.y_0,wall.x_f -wall.x_0,wall.y_f-wall.y_0)/(norm(wall.x_f-wall.x_0,wall.y_f-wall.y_0)^2)
-    --C = doti(object.x-wall.x_0,object.y-wall.y_0,wall.x_f -wall.x_0,wall.y_f-wall.y_0)/norm(wall.x_f-wall.x_0,wall.y_f-wall.y_0)
-    xx = C*(wall.x_f-wall.x_0) + wall.x_0
-    yy = C*(wall.y_f-wall.y_0) + wall.y_0
+function ortho_project(x1,y2,x2,y2)
+    C=doti(x1,y1,x2,y2)/(norm(x2,y2)^2)
+    x = C*x2
+    y = C*y2
+    return{x,y}
+end 
+
+function project_in_wall(object,wall)
+    x1 = object.x - wall.x_0
+    y1 = object.y - wall.y_0
+    x2 = wall.x_f - wall.x_0
+    y2 = wall.y_f - wall.y_0
+    proj = ortho_project(x1,y1,x2,y2)
+    xx = proj[1] + wall.x_0
+    yy = proj[2] + wall.y_0
     return {xx,yy}
 end 
 
