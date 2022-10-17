@@ -14,12 +14,12 @@ function norm(x,y) --norma inducoda por doti
 end
 
 function dist(x1, y1, x2, y2) -- distancia entre 2 elementos 
-    d = ((x1 - x2)^2 + (y1 - y2)^2)^(0.5)
+    d = norm(x1 - x2,y1 - y2)
     return d
 end
 
 function ortho_project(x1,y2,x2,y2)
-    C=doti(x1,y1,x2,y2)/(norm(x2,y2)^2)
+    C = doti(x1,y1,x2,y2)/(norm(x2,y2)^2)
     x = C*x2
     y = C*y2
     return{x,y}
