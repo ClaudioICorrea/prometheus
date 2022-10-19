@@ -47,6 +47,7 @@ end
 function love.update()
     --movimientos del jugador--
     player1:_move()
+    player1:_input_player()
 
     --movimientos del los enemigos--
     if game.state["running"] then

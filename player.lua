@@ -7,35 +7,49 @@ function Player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.velocity = velocity or 0
     self.x = x or 0
     self.y = y or 0
+    self.direction_x = 0
+    self.direction_y = 0
     self.target_x = target_x or 0
     self.target_y = target_y or 0
     self.click_right = click_right or false
     self.click_left = click_left or false
 end
 
-function Player:_move()
-    if game.state["running"] then
-        if love.keyboard.isDown("w") then
-            self.y = self.y - 1 * self.velocity
+
+function Player:_input_player()
+    self.direction_x = 0
+    self.direction_y = 0
+    self.target_x = love.mouse.getX() -- ubicacion del mouse en x
+    self.target_y = love.mouse.getY() -- ubicacion del mouse en y
+    self.click_right = love.mouse.isDown(1)
+    self.click_left = love.mouse.isDown(2)
+    if game.state["running"] then 
+    -- direccion del jugador     
+        if love.keyboard.isDown("w") and not love.keyboard.isDown("s") then
+            self.direction_y = (self.direction_y - 1)/norm(self.direction_x,self.direction_y - 1)
         end
-        if love.keyboard.isDown("s") then
-            self.y = self.y + 1 * self.velocity
+        if  love.keyboard.isDown("s")  and not love.keyboard.isDown("w") then
+            self.direction_y = (self.direction_y + 1)/norm(self.direction_x,self.direction_y + 1)
         end
-        if love.keyboard.isDown("a") then
-            self.x = self.x - 1 * self.velocity
+        if  love.keyboard.isDown("a") and not love.keyboard.isDown("d") then
+            self.direction_x = (self.direction_x - 1)/norm(self.direction_x - 1,self.direction_y)
         end
-        if love.keyboard.isDown("d") then
-            self.x = self.x + 1 * self.velocity
+        if love.keyboard.isDown("d") and not love.keyboard.isDown("a") then
+            self.direction_x = (self.direction_x + 1)/norm(self.direction_x + 1,self.direction_y) 
         end
         if love.keyboard.isDown("m") then
             game.state["menu"]= true
             game.state["running"] = false
         end
+    end 
+end
+
+
+function Player:_move()
+    if game.state["running"] then
+        self.y = self.y + self.direction_y*self.velocity
+        self.x = self.x + self.direction_x*self.velocity
     end
-    self.target_x = love.mouse.getX() -- ubicacion del mouse en x
-    self.target_y = love.mouse.getY() -- ubicacion del mouse en y
-    self.click_right = love.mouse.isDown(1)
-    self.click_left = love.mouse.isDown(2)
 end
 
 function Player:draw()
