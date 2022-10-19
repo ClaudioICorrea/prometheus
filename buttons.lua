@@ -19,11 +19,9 @@ function Button:new(text, func, param, width, height, x_pos, y_pos, font)
 end
 
 function Button:_check_click()
-    hor_cond_1 = love.mouse.getX() <= self.button_x + self.width
-    hor_cond_2 = love.mouse.getX() >= self.button_x
-    ver_cond_1 = love.mouse.getY() <= self.button_y + self.height
-    ver_cond_2 = love.mouse.getY() >= self.button_y
-    if(hor_cond_1 and hor_cond_2 and ver_cond_1 and ver_cond_2)then
+    hor_cond = math.abs(self.button_x + self.width/2 - love.mouse.getX()) <= self.width/2
+    ver_cond = math.abs(self.button_y + self.height/2 - love.mouse.getY()) <= self.height/2
+    if(hor_cond and ver_cond)then
         self.func(self.param)
     end
 end
