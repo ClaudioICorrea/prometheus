@@ -45,10 +45,10 @@ function Player:_input_player()
 end
 
 
-function Player:_move()
+function Player:_move(dt)
     if game.state["running"] then
-        self.y = self.y + self.direction_y*self.velocity
-        self.x = self.x + self.direction_x*self.velocity
+        self.y = self.y + self.direction_y * self.velocity * dt
+        self.x = self.x + self.direction_x * self.velocity * dt
     end
 end
 

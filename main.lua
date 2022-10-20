@@ -25,15 +25,15 @@ game = {
 }
 
 function love.load()
-    player1 = Player(750, 600, 50, 50, 5, 5)-- jugador
+    player1 = Player(750, 600, 50, 50, 100, 5)-- jugador
     load_menu() -- menu
     --escenario--
     wall_word = {}
-    table.insert(wall_word, _helper(Wall(),{"x_0", 50, "y_0", 50, "x_f", 700, "y_f", 180}))
-    table.insert(wall_word, _helper(Wall(),{"x_0", 0, "y_0", 0, "x_f", 0, "y_f", 700}))
-    table.insert(wall_word, _helper(Wall(),{"x_0", 0, "y_0", 0, "x_f", 700, "y_f", 0 }))
-    table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 300, "x_f", 700, "y_f", 0 }))
-    table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 700, "x_f", 800, "y_f", 0 }))
+    table.insert(wall_word, Wall( 50, 50, 700, 180))
+    table.insert(wall_word, Wall(0,0,0,700))
+    table.insert(wall_word, Wall(0, 0, 700, 0))
+    table.insert(wall_word, Wall(10, 300, 700, 0))
+    table.insert(wall_word, Wall(10, 700, 800, 0))
     --table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 10, "x_f", 700, "y_f", 200 }))
     --enemigos y npc--
     enemies_mele = {}
@@ -44,10 +44,11 @@ function love.load()
     --table.insert(enemies_mele, Enemy(350,0))
 end
 
-function love.update()
+function love.update(dt)
     --movimientos del jugador--
-    player1:_move()
     player1:_input_player()
+    player1:_move(dt)
+
 
     --movimientos del los enemigos--
     if game.state["running"] then
