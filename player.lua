@@ -41,16 +41,21 @@ function Player:_input_player()
     if game.state["running"] then 
     -- direccion del jugador     
         if love.keyboard.isDown("w") and not love.keyboard.isDown("s") then
-            self.direction_y = (self.direction_y - 1)/norm(self.direction_x,self.direction_y - 1)
+            self.direction_y = (self.direction_y - 1)
         end
         if  love.keyboard.isDown("s")  and not love.keyboard.isDown("w") then
-            self.direction_y = (self.direction_y + 1)/norm(self.direction_x,self.direction_y + 1)
+            self.direction_y = (self.direction_y + 1)
         end
         if  love.keyboard.isDown("a") and not love.keyboard.isDown("d") then
-            self.direction_x = (self.direction_x - 1)/norm(self.direction_x - 1,self.direction_y)
+            self.direction_x = (self.direction_x - 1)
         end
         if love.keyboard.isDown("d") and not love.keyboard.isDown("a") then
-            self.direction_x = (self.direction_x + 1)/norm(self.direction_x + 1,self.direction_y) 
+            self.direction_x = (self.direction_x + 1)
+        end
+        norm_direc =norm(self.direction_x,self.direction_y) 
+        if not( norm_direc  == 0) then 
+            self.direction_x = self.direction_x/norm_direc
+            self.direction_y = self.direction_y/norm_direc
         end
         if love.keyboard.isDown("m") then
             game.state["menu"]= true

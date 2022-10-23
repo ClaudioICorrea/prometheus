@@ -1,3 +1,5 @@
+Object = require("lukeclassic")
+
 function square_draw(mode, x, y, w, h)
     ww = w / 2
     hh = h / 2
@@ -16,6 +18,11 @@ end
 function dist(x1, y1, x2, y2) -- distancia entre 2 elementos 
     d = norm(x1 - x2,y1 - y2)
     return d
+end
+
+function trunc(num, digits)
+    local mult = 10^(digits)
+    return math.modf(num*mult)/mult
 end
 
 function ortho_project(x1,y2,x2,y2)

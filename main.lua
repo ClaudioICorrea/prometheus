@@ -104,11 +104,11 @@ function love.draw()
         end
         --experimento 
         if info_game then
-            love.graphics.print("velocidad_x =" .. tostring(player1.velocity*player1.direction_x) , 0 , 400 )
-            love.graphics.print("velocidad_y = " .. tostring(player1.velocity*player1.direction_y), 0 , 410 )
-            love.graphics.print("direccion = (" .. tostring(player1.direction_x) .. "," .. tostring(player1.direction_y) .. ")", 0 , 420 )
-            love.graphics.print("(x,y) = " .. "(" .. tostring(player1.x) .. "," .. tostring(player1.y).. ")", 0 , 430 )
-            love.graphics.print("velocidad = " .. tostring(player1.velocity)  , 0 , 440 )
+            love.graphics.print("velocidad_x =" .. tostring(trunc(player1.velocity*player1.direction_x,3)) , 0 , 400 )
+            love.graphics.print("velocidad_y = " .. tostring(trunc(player1.velocity*player1.direction_y,3)), 0 , 410 )
+            love.graphics.print("direccion = (" .. tostring(trunc(player1.direction_x,3)) .. "," .. tostring(trunc(player1.direction_y,3)) .. ")", 0 , 420 )
+            love.graphics.print("(x,y) = " .. "(" .. tostring(trunc(player1.x,3)) .. "," .. tostring(trunc(player1.y,3)).. ")", 0 , 430 )
+            love.graphics.print("velocidad = " .. tostring(trunc(player1.velocity,3))  , 0 , 440 )
             love.graphics.print("etc = ", 0 , 450 )
         end
         --love.graphics.line(50, 50, 700, 180)
