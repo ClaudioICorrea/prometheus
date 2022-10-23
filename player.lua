@@ -14,6 +14,21 @@ function Player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.click_right = click_right or false
     self.click_left = click_left or false
 end
+function keypressed(key,prop)
+    if love.keyboard.isDown(key) then
+        check1 = true     
+    end
+    if not love.keyboard.isDown(key) and check1 then
+        check2 = true 
+    end    
+    if check1 and check2 then
+        prop =not prop
+        check1 =false
+        check2 =false
+    end
+    return prop
+end
+
 
 
 function Player:_input_player()
@@ -41,6 +56,7 @@ function Player:_input_player()
             game.state["menu"]= true
             game.state["running"] = false
         end
+        info_game = keypressed("1", info_game)
     end 
 end
 
