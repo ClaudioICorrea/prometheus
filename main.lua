@@ -47,6 +47,9 @@ end
 function love.update(dt)
     --movimientos del jugador--
     player1:_input_player()
+    for i,wall in pairs(wall_word) do
+        wall:_wall_collider(player1, dt)
+    end
     player1:_move(dt)
 
 
@@ -78,7 +81,6 @@ function love.update(dt)
 end
 --dibujar
 function love.draw()
-
     if game.state["running"] then
         -- Dibujar Jugador 1 --
         player1:draw()

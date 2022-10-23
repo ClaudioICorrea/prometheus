@@ -23,7 +23,11 @@ function ortho_project(x1,y2,x2,y2)
     x = C*x2
     y = C*y2
     return{x,y}
-end 
+end
+
+function _sign(x)
+    return x>0 and 1 or x<0 and -1 or 0
+end
 
 function project_in_wall(object,wall)
     x1 = object.x - wall.x_0
@@ -34,7 +38,9 @@ function project_in_wall(object,wall)
     xx = proj[1] + wall.x_0
     yy = proj[2] + wall.y_0
     return {xx,yy}
-end 
+end
+
+
 
 
 function _helper(object, values_table)
