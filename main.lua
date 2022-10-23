@@ -25,15 +25,16 @@ game = {
 }
 
 function love.load()
+    info_game = false
     player1 = Player(750, 600, 50, 50, 100, 5)-- jugador
     load_menu() -- menu
     --escenario--
     wall_word = {}
     table.insert(wall_word, Wall( 50, 50, 700, 180))
-    table.insert(wall_word, Wall(0,0,0,700))
-    table.insert(wall_word, Wall(0, 0, 700, 0))
-    table.insert(wall_word, Wall(10, 300, 700, 0))
-    table.insert(wall_word, Wall(10, 700, 800, 0))
+    --table.insert(wall_word, Wall(0,0,0,700))
+    --table.insert(wall_word, Wall(0, 0, 700, 0))
+    --table.insert(wall_word, Wall(10, 300, 700, 0))
+    --table.insert(wall_word, Wall(10, 700, 800, 0))
     --table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 10, "x_f", 700, "y_f", 200 }))
     --enemigos y npc--
     enemies_mele = {}
@@ -104,7 +105,14 @@ function love.draw()
             love.graphics.circle("fill",ejem_x, ejem_y, 10)
         end
         --experimento 
-        
+        if info_game then
+            love.graphics.print("velocidad_x =" .. tostring(player1.velocity*player1.direction_x) , 0 , 400 )
+            love.graphics.print("velocidad_y = " .. tostring(player1.velocity*player1.direction_y), 0 , 410 )
+            love.graphics.print("direccion = (" .. tostring(player1.direction_x) .. "," .. tostring(player1.direction_y) .. ")", 0 , 420 )
+            love.graphics.print("(x,y) = " .. "(" .. tostring(player1.x) .. "," .. tostring(player1.y).. ")", 0 , 430 )
+            love.graphics.print("velocidad = " .. tostring(player1.velocity)  , 0 , 440 )
+            love.graphics.print("etc = ", 0 , 450 )
+        end
         --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then
         draw_menu()        
