@@ -31,6 +31,7 @@ function Wall:_wall_collider(walker, dt)
         end
 
     else
+
         corner_collider(self.x_0, self.y_0, walker, dt)
         corner_collider(self.x_f, self.y_f, walker, dt)
     end
@@ -47,6 +48,6 @@ function Wall:on_wall(object)
     proj = ortho_project(x1,y1,x2,y2)
     xx = proj[1] + self.x_0
     yy = proj[2] + self.y_0
-    return {xx,yy,(xx <= math.max(self.x_0,self.x_f) and xx >= math.min(self.x_0,self.x_f)) and (yy <= math.max(self.y_0,self.y_f) and yy >= math.min(self.y_0,self.y_f))}
+    return (xx <= math.max(self.x_0,self.x_f) and xx >= math.min(self.x_0,self.x_f)) and (yy <= math.max(self.y_0,self.y_f) and yy >= math.min(self.y_0,self.y_f))
 end
 
