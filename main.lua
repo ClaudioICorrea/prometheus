@@ -30,10 +30,10 @@ function love.load()
     load_menu() -- menu
     --escenario--
     wall_word = {}
-    table.insert(wall_word, Wall( 50, 50, 700, 180))
-    table.insert(wall_word, Wall(0,0,0,700))
+    --table.insert(wall_word, Wall( 50, 50, 700, 180))
+    --table.insert(wall_word, Wall(0,0,0,700))
     --table.insert(wall_word, Wall(0, 0, 700, 0))
-    table.insert(wall_word, Wall(100, 300, 700, 0))
+    --table.insert(wall_word, Wall(100, 300, 700, 0))
     --table.insert(wall_word, Wall(10, 700, 800, 0))
     --table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 10, "x_f", 700, "y_f", 200 }))
     --enemigos y npc--
