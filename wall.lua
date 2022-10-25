@@ -20,7 +20,7 @@ function Wall:draw()
 end
 
 function Wall:_wall_collider(walker, dt)
-    if (self:on_wall(walker)) then
+    if (self:on_wall(walker)[3]) then
         signed_distance = self.normal[1] * walker.x + self.normal[2] * walker.y - self.plane_constant
         sign = _sign(signed_distance)
         signed_distance = signed_distance - sign * walker.radius
