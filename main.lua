@@ -111,7 +111,7 @@ function love.draw()
             love.graphics.print("direccion = (" .. tostring(trunc(player1.direction_x,3)) .. "," .. tostring(trunc(player1.direction_y,3)) .. ")", 0 , 420 )
             love.graphics.print("(x,y) = " .. "(" .. tostring(trunc(player1.x,3)) .. "," .. tostring(trunc(player1.y,3)).. ")", 0 , 430 )
             love.graphics.print("velocidad = " .. tostring(trunc(player1.velocity,3))  , 0 , 440 )
-            love.graphics.print("etc = ", 0 , 450 )
+            love.graphics.print("dist_to_wall = " .. tostring(dist_to_wall), 0 , 450 )
         end
         --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then
