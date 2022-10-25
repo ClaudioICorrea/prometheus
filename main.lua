@@ -51,7 +51,7 @@ function love.update(dt)
     for i,wall in pairs(wall_word) do
         wall:_wall_collider(player1, dt)
     end
-    ball_collider(screen_width/2,screen_height/2,30,player1,dt)
+    --ball_collider(screen_width/2,screen_height/2,30,player1,dt)
     player1:_move(dt)
 
 
@@ -83,7 +83,7 @@ function love.update(dt)
 end
 --dibujar
 function love.draw()
-    love.graphics.circle("line",screen_width/2,screen_height/2,30)
+    --love.graphics.circle("line",screen_width/2,screen_height/2,30)
     if game.state["running"] then
         -- Dibujar Jugador 1 --
         player1:draw()
