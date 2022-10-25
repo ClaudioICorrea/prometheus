@@ -24,17 +24,17 @@ function Wall:_wall_collider(walker, dt)
         signed_distance = self.normal[1] * walker.x + self.normal[2] * walker.y - self.plane_constant
         sign = _sign(signed_distance)
         signed_distance = signed_distance - sign * walker.radius
-        next_distance = signed_distance +  (self.normal[1] * walker.direction_x + self.normal[2] * walker.direction_y ) *dt *walker.velocity * walker.coefficient
+        next_distance = signed_distance +  (self.normal[1] * walker.direction_x + self.normal[2] * walker.direction_y ) *dt *walker.velocity
         if (_sign(next_distance) ~= sign and (norm(walker.direction_x,walker.direction_y)>0)) then
-            coefficient = - signed_distance / ((self.normal[1] * walker.direction_x + self.normal[2] * walker.direction_y ) * walker.velocity * dt)
-        else
-            coefficient = walker.coefficient
+            walker.direction_x = walker.direction_x - next_distance * self.normal[1] / (walker.velocity *dt)
+            walker.direction_y = walker.direction_y - next_distance * self.normal[2] / (walker.velocity *dt)
         end
 
     else
-        coefficient = walker.coefficient
+        corner_collider(self.x_0, self.y_0, walker, dt)
+        corner_collider(self.x_f, self.y_f, walker, dt)
     end
-    walker.coefficient = coefficient
+
 end
 
 function Wall:on_wall(object)
@@ -47,3 +47,4 @@ function Wall:on_wall(object)
     yy = proj[2] + self.y_0
     return (xx <= math.max(self.x_0,self.x_f) and xx >= math.min(self.x_0,self.x_f)) and (yy <= math.max(self.y_0,self.y_f) and yy >= math.min(self.y_0,self.y_f))
 end
+

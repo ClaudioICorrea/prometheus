@@ -33,7 +33,7 @@ function ortho_project(x1,y2,x2,y2)
 end
 
 function _sign(x)
-    return x>0 and 1 or x<0 and -1 or 0
+    return x>=0 and 1 or x<0 and -1
 end
 
 function project_in_wall(object,wall)
@@ -45,6 +45,22 @@ function project_in_wall(object,wall)
     xx = proj[1] + wall.x_0
     yy = proj[2] + wall.y_0
     return {xx,yy}
+end
+
+function corner_collider(x_0,y_0,walker,dt)
+    next_pos_x = walker.x + dt * walker.velocity * walker.direction_x
+    next_pos_y = walker.y + dt * walker.velocity * walker.direction_y
+    next_distance = dist(x_0,y_0, next_pos_x ,next_pos_y )
+    if(next_distance < walker.radius) then
+        amount = walker.radius - next_distance
+        normal_x =  next_pos_x - x_0
+        normal_y = next_pos_y - y_0
+        n = norm(normal_x,normal_y)
+        normal_x = normal_x / n
+        normal_y = normal_y / n
+        walker.direction_x = walker.direction_x + amount * normal_x / (walker.velocity *dt)
+        walker.direction_y = walker.direction_y + amount * normal_y / (walker.velocity *dt)
+    end
 end
 
 
