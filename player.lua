@@ -35,7 +35,6 @@ end
 function Player:_input_player()
     self.direction_x = 0
     self.direction_y = 0
-    self.coefficient = 1
     self.target_x = love.mouse.getX() -- ubicacion del mouse en x
     self.target_y = love.mouse.getY() -- ubicacion del mouse en y
     self.click_right = love.mouse.isDown(1)
