@@ -48,10 +48,10 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
-    table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
-    table.insert(enemies_mele, Enemy(250,0))
-    table.insert(enemies_mele, Enemy(350,0))
+    --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
+    --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
+    --table.insert(enemies_mele, Enemy(250,0))
+    --table.insert(enemies_mele, Enemy(350,0))
 end
 
 function love.update(dt)

@@ -98,12 +98,33 @@ end
 
 --OTHER--
 
+function split (inputstr, sep)
+    if sep == nil then
+            sep = "%s"
+    end
+    local t={}
+    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+            table.insert(t, str)
+    end
+    return t
+end
+
 function read_luke(path)
+    firts_line =true
+    
     file = io.input(path,'r')
     tabla = {}
     for line in file:lines() do
-        r = {io.read("*n"), io.read("*n")}
-        table.insert(tabla,r)
+        str ={}
+        r = {}
+        if not firts_line then
+                str = split (line, " ")
+                for i,num in pairs(str) do
+                    table.insert(r,tonumber(num))
+                end     
+            table.insert(tabla,r)
+        end
+        firts_line =false
     end
         io.close()
     return tabla
