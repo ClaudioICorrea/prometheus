@@ -16,7 +16,15 @@ function Wall:new(x_0, y_0, x_f, y_f, typ)
 end
 
 function Wall:draw()
+    if self.typ == 1 then
+        love.graphics.setColor(0, 0, 1) -- pared
+    elseif self.typ == 2  then
+        love.graphics.setColor(0, 1, 0)
+    elseif self.typ == 3  then
+        love.graphics.setColor(1, 0, 0)
+    end
     love.graphics.line(self.x_0,self.y_0,self.x_f,self.y_f)
+    love.graphics.setColor(360, 360, 360)
 end
 
 function Wall:_wall_collider(walker, dt)

@@ -26,18 +26,18 @@ game = {
 
 function love.load()
     
-    conn = read_luke('conn.txt')
-    node = read_luke('node.txt')
+    conn = read_luke('conn_nivel_test.txt')
+    node = read_luke('node_nivel_test.txt')
 
 
     info_game = false
-    player1 = Player(750, 600, 50, 50, 100, 5)-- jugador
+    player1 = Player(700, 400, 50, 50, 100, 5)-- jugador
     load_menu() -- menu
     --escenario--
     wall_word = {}
 
     for i,con in pairs(conn) do
-        table.insert(wall_word, Wall( node[con[1]][1], node[con[1]][2], node[con[2]][1], node[con[2]][2]))
+        table.insert(wall_word, Wall( node[con[1]][1], node[con[1]][2], node[con[2]][1], node[con[2]][2],con[3]))
     end
     --table.insert(wall_word, Wall( 50, 50, 700, 180))
     --table.insert(wall_word, Wall(0,0,0,700))
@@ -110,10 +110,10 @@ function love.draw()
         --Dibujar escenario (experimento)
         for i,wall in pairs(wall_word) do
             wall:draw()
-            ejem=project_in_wall(player1,wall)
-            ejem_x =ejem[1]
-            ejem_y =ejem[2]
-            love.graphics.circle("fill",ejem_x, ejem_y, 10)
+            --ejem=project_in_wall(player1,wall)
+            --ejem_x =ejem[1]
+            --ejem_y =ejem[2]
+            --love.graphics.circle("fill",ejem_x, ejem_y, 10)
         end
         --experimento 
         if info_game then
@@ -122,7 +122,8 @@ function love.draw()
             love.graphics.print("direccion = (" .. tostring(trunc(player1.direction_x,3)) .. "," .. tostring(trunc(player1.direction_y,3)) .. ")", 0 , 420 )
             love.graphics.print("(x,y) = " .. "(" .. tostring(trunc(player1.x,3)) .. "," .. tostring(trunc(player1.y,3)).. ")", 0 , 430 )
             love.graphics.print("velocidad = " .. tostring(trunc(player1.velocity,3))  , 0 , 440 )
-            love.graphics.print("dist_to_wall = " .. tostring(dist_to_wall), 0 , 450 )
+            love.graphics.print("screen_width = " .. tostring(screen_width), 0 , 450 )
+            love.graphics.print("screen_height = " .. tostring(screen_height), 0 , 460 )
         end
         --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then
