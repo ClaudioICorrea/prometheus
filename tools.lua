@@ -1,5 +1,5 @@
 Object = require("lukeclassic")
-
+-- MATHS
 function square_draw(mode, x, y, w, h)
     ww = w / 2
     hh = h / 2
@@ -95,3 +95,22 @@ function _helper(object, values_table)
     return object
 end
 
+
+--OTHER--
+
+function read_luke(path)
+    file = io.input(path,'r')
+    tabla = {}
+    for line in file:lines() do
+        r = {io.read("*n"), io.read("*n")}
+        table.insert(tabla,r)
+    end
+        io.close()
+    return tabla
+end
+
+function show_tabla(tabla)
+    for i,line in pairs(tabla) do
+        print(line[1],line[2])
+    end
+end

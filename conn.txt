@@ -1,0 +1,3 @@
+--conectividad entre nodos
+1 2
+2 3

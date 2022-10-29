@@ -25,11 +25,20 @@ game = {
 }
 
 function love.load()
+    
+    conn = read_luke('conn.txt')
+    node = read_luke('node.txt')
+
+
     info_game = false
     player1 = Player(750, 600, 50, 50, 100, 5)-- jugador
     load_menu() -- menu
     --escenario--
     wall_word = {}
+
+    for i,con in pairs(conn) do
+        table.insert(wall_word, Wall( node[con[1]][1], node[con[1]][2], node[con[2]][1], node[con[2]][2]))
+    end
     --table.insert(wall_word, Wall( 50, 50, 700, 180))
     --table.insert(wall_word, Wall(0,0,0,700))
     --table.insert(wall_word, Wall(0, 0, 700, 0))
@@ -39,10 +48,10 @@ function love.load()
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
-    --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
-    --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
-    --table.insert(enemies_mele, Enemy(250,0))
-    --table.insert(enemies_mele, Enemy(350,0))
+    table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
+    table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
+    table.insert(enemies_mele, Enemy(250,0))
+    table.insert(enemies_mele, Enemy(350,0))
 end
 
 function love.update(dt)
