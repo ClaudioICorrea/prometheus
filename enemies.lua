@@ -6,18 +6,27 @@ Enemy = Object:extend()
 
 function Enemy:new(x, y, target_x, target_y, velocity, vision)
     self.vision = vision or 300
-    self.velocity = velocity or 2
+    self.radius = radius or 10
+    self.velocity = velocity or 10
     self.x = x or 0
     self.y = y or 0
     self.target_x = target_x or 0
     self.target_y = target_y or 0
+    self.direction_x = 0
+    self.direction_y = 0
     self.is_ranger = false
+    self.coefficient = 1
 end
 
-function Enemy:_move_to(location_x, location_y)
+function Enemy:_direction(location_x, location_y)
     direction ={(location_x - self.x ) / norm(self.x - location_x, self.y - location_y), (location_y - self.y) / norm(self.x - location_x, self.y - location_y)}
-    self.x = self.x + direction[1]*self.velocity
-    self.y = self.y + direction[2]*self.velocity
+    self.direction_x = direction[1]
+    self.direction_y = direction[2]
+end
+
+function Enemy:_move_to(dt)
+    self.x = self.x + self.direction_x*self.velocity* dt * self.coefficient
+    self.y = self.y + self.direction_y*self.velocity* dt * self.coefficient
 end
 
 function Enemy:_shoot()

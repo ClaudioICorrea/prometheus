@@ -50,8 +50,8 @@ function love.load()
     enemies_range = {}
     --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
     --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
-    --table.insert(enemies_mele, Enemy(250,0))
-    --table.insert(enemies_mele, Enemy(350,0))
+    table.insert(enemies_mele, Enemy(250,0))
+    table.insert(enemies_mele, Enemy(350,0))
 end
 
 function love.update(dt)
@@ -70,8 +70,12 @@ function love.update(dt)
             if dist(player1.x, player1.y, enemy_mele.x, enemy_mele.y) < enemy_mele.vision then
                 enemy_mele.target_x = player1.x
                 enemy_mele.target_y = player1.y
-                enemy_mele:_move_to(enemy_mele.target_x, enemy_mele.target_y)
+                enemy_mele:_direction(enemy_mele.target_x, enemy_mele.target_y)
             end
+            for j,wall in pairs(wall_word) do
+                wall:_wall_collider(enemy_mele, dt)
+            end
+            enemy_mele:_move_to(dt)
         end
         for i,enemy_range in pairs(enemies_range) do
             enemy_range.ratio = math.min(enemy_range.ratio + 1, enemy_range.max_ratio)
