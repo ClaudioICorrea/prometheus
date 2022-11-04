@@ -47,6 +47,11 @@ function project_in_wall(object,wall)
     return {xx,yy}
 end
 
+function dist_to_wall(object,wall)
+    dist_wall= project_in_wall(object,wall)
+    d= dist(object.x,object.y,dist_wall[1],dist_wall[2])
+    return d
+end 
 function ball_collider(x_0, y_0, ball_radius, walker, dt)
     next_pos_x = walker.x + dt * walker.velocity * walker.direction_x
     next_pos_y = walker.y + dt * walker.velocity * walker.direction_y
@@ -132,6 +137,10 @@ end
 
 function show_tabla(tabla)
     for i,line in pairs(tabla) do
-        print(line[1],line[2])
+        str = ""
+        for j,elent in  pairs(line) do 
+            str = str .." ".. tostring(line[j])
+        end
+        print(str)
     end
 end

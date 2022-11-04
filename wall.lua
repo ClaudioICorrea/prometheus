@@ -28,22 +28,20 @@ function Wall:draw()
 end
 
 function Wall:_wall_collider(walker, dt)
-    if (self:on_wall(walker)) then
-        signed_distance = self.normal[1] * walker.x + self.normal[2] * walker.y - self.plane_constant
-        sign = _sign(signed_distance)
-        signed_distance = signed_distance - sign * walker.radius
-        next_distance = signed_distance +  (self.normal[1] * walker.direction_x + self.normal[2] * walker.direction_y ) *dt *walker.velocity
-        if (_sign(next_distance) ~= sign and (norm(walker.direction_x,walker.direction_y)>0)) then
-            walker.direction_x = walker.direction_x - next_distance * self.normal[1] / (walker.velocity *dt)
-            walker.direction_y = walker.direction_y - next_distance * self.normal[2] / (walker.velocity *dt)
+        if (self:on_wall(walker)) then
+            signed_distance = self.normal[1] * walker.x + self.normal[2] * walker.y - self.plane_constant
+            sign = _sign(signed_distance)
+            signed_distance = signed_distance - sign * walker.radius
+            next_distance = signed_distance +  (self.normal[1] * walker.direction_x + self.normal[2] * walker.direction_y ) *dt *walker.velocity
+            if (_sign(next_distance) ~= sign and (norm(walker.direction_x,walker.direction_y)>0)) then
+                walker.direction_x = walker.direction_x - next_distance * self.normal[1] / (walker.velocity *dt)
+                walker.direction_y = walker.direction_y - next_distance * self.normal[2] / (walker.velocity *dt)
+            end
+        else
+
+            corner_collider(self.x_0, self.y_0, walker, dt)
+            corner_collider(self.x_f, self.y_f, walker, dt)
         end
-
-    else
-
-        corner_collider(self.x_0, self.y_0, walker, dt)
-        corner_collider(self.x_f, self.y_f, walker, dt)
-    end
-
 end
 
 
@@ -59,3 +57,18 @@ function Wall:on_wall(object)
     return (xx <= math.max(self.x_0,self.x_f) and xx >= math.min(self.x_0,self.x_f)) and (yy <= math.max(self.y_0,self.y_f) and yy >= math.min(self.y_0,self.y_f))
 end
 
+function Wall:_door(x_0, y_0, x_f, y_f,func,live)
+    door = Wall(x_0, y_0, x_f, y_f,2)
+    door.open = false
+    door.live = live or 100 
+    door.func = func or function() print("Este Boton no tiene funcionalidad") end
+    return door
+end
+
+function Wall:_toc_toc_door(object)
+    if typ == 2 then 
+        d =dist_to_wall(object, Wall)
+        
+    end 
+    return d 
+end 

@@ -35,23 +35,25 @@ function love.load()
     load_menu() -- menu
     --escenario--
     wall_word = {}
+    door_word = {}
+    window_word = {}
 
     for i,con in pairs(conn) do
-        table.insert(wall_word, Wall( node[con[1]][1], node[con[1]][2], node[con[2]][1], node[con[2]][2],con[3]))
+        if con[3] == 2 then
+            table.insert(door_word, Wall:_door(node[con[1]][1], node[con[1]][2], node[con[2]][1], node[con[2]][2],con[3]))
+        elseif con[3] == 3 then
+            table.insert(window_word, Wall( node[con[1]][1], node[con[1]][2], node[con[2]][1], node[con[2]][2],con[3]))
+        else
+            table.insert(wall_word, Wall( node[con[1]][1], node[con[1]][2], node[con[2]][1], node[con[2]][2],con[3]))
+        end
     end
-    --table.insert(wall_word, Wall( 50, 50, 700, 180))
-    --table.insert(wall_word, Wall(0,0,0,700))
-    --table.insert(wall_word, Wall(0, 0, 700, 0))
-    --table.insert(wall_word, Wall(100, 300, 700, 0))
-    --table.insert(wall_word, Wall(10, 700, 800, 0))
-    --table.insert(wall_word, _helper(Wall(),{"x_0", 10, "y_0", 10, "x_f", 700, "y_f", 200 }))
     --enemigos y npc--
     enemies_mele = {}
     enemies_range = {}
     --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 20, "velocity_shoot", 10, "max_ratio", 1, "range", 100}))
     --table.insert(enemies_range, _helper(Enemy:_new_ranger(),{"x", 500, "y", 100, "velocity_shoot", 10, "max_ratio", 40,  "range", 300}))
-    table.insert(enemies_mele, Enemy(250,0))
-    table.insert(enemies_mele, Enemy(350,0))
+    table.insert(enemies_mele, Enemy(250,100))
+    table.insert(enemies_mele, Enemy(350,100))
 end
 
 function love.update(dt)
@@ -59,6 +61,15 @@ function love.update(dt)
     player1:_input_player()
     for i,wall in pairs(wall_word) do
         wall:_wall_collider(player1, dt)
+    end
+    for i,door in pairs(door_word) do
+        distance_to_door = door:_toc_toc_door(player1)
+        if  not door.open then
+            door:_wall_collider(player1, dt)
+        end
+    end
+    for i,window in pairs(window_word) do
+        window:_wall_collider(player1, dt)
     end
     --ball_collider(screen_width/2,screen_height/2,30,player1,dt)
     player1:_move(dt)
@@ -74,6 +85,12 @@ function love.update(dt)
             end
             for j,wall in pairs(wall_word) do
                 wall:_wall_collider(enemy_mele, dt)
+            end
+            for j,door in pairs(door_word) do
+                door:_wall_collider(enemy_mele, dt)
+            end
+            for j,window in pairs(window_word) do
+                window:_wall_collider(enemy_mele, dt)
             end
             enemy_mele:_move_to(dt)
         end
@@ -114,11 +131,26 @@ function love.draw()
         --Dibujar escenario (experimento)
         for i,wall in pairs(wall_word) do
             wall:draw()
-            --ejem=project_in_wall(player1,wall)
-            --ejem_x =ejem[1]
-            --ejem_y =ejem[2]
-            --love.graphics.circle("fill",ejem_x, ejem_y, 10)
+            ejem=project_in_wall(player1,wall)
+            ejem_x =ejem[1]
+            ejem_y =ejem[2]
+            love.graphics.circle("fill",ejem_x, ejem_y, 1)
         end
+        for i,door in pairs(door_word) do
+            door:draw()
+            ejem=project_in_wall(player1,door)
+            ejem_x =ejem[1]
+            ejem_y =ejem[2]
+            love.graphics.circle("fill",ejem_x, ejem_y, 1)
+        end
+        for i,window in pairs(window_word) do
+            window:draw()
+            ejem=project_in_wall(player1,window)
+            ejem_x =ejem[1]
+            ejem_y =ejem[2]
+            love.graphics.circle("fill",ejem_x, ejem_y, 1)
+        end
+
         --experimento 
         if info_game then
             love.graphics.print("velocidad_x =" .. tostring(trunc(player1.velocity*player1.direction_x,3)) , 0 , 400 )
@@ -128,6 +160,7 @@ function love.draw()
             love.graphics.print("velocidad = " .. tostring(trunc(player1.velocity,3))  , 0 , 440 )
             love.graphics.print("screen_width = " .. tostring(screen_width), 0 , 450 )
             love.graphics.print("screen_height = " .. tostring(screen_height), 0 , 460 )
+            love.graphics.print("distance_to_door = " .. tostring(distance_to_door), 0 , 470 )
         end
         --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then
