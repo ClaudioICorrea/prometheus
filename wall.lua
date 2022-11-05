@@ -59,16 +59,16 @@ end
 
 function Wall:_door(x_0, y_0, x_f, y_f,func,live)
     door = Wall(x_0, y_0, x_f, y_f,2)
+    door.mid_x = (door.x_0 +door.x_f)*0.5 
+    door.mid_y = (door.y_0 +door.y_f)*0.5 
     door.open = false
     door.live = live or 100 
     door.func = func or function() print("Este Boton no tiene funcionalidad") end
     return door
 end
 
-function Wall:_toc_toc_door(object)
-    if typ == 2 then 
-        d =dist_to_wall(object, Wall)
-        
-    end 
-    return d 
+function Wall:_toc_toc_door(object,tol)
+    if dist(object.x,object.y, self.mid_x, self.mid_y ) < tol then
+        door.open=keypressed("e", door.open)
+    end
 end 

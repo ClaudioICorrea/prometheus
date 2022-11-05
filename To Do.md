@@ -9,18 +9,25 @@
 
 ### Paso 2
 
- \# Colliders, para personajes y muros
+ \# Colliders, para personajes y muros (listo)
+```
+se creo un rutina para leer archivos tipo node y tipo edge 
+ node. -->  es un archivo txt que lee la cordenada de cada  nodo 
+ edge. -->  es un archivo txt que lee los nodos que componen las aristas + una tersera carateristica que corresponde a un label   
+```
 
-\# Puertas y paredes son tipos de muro
+\# Puertas y paredes son tipos de muro (pendiente)
 
-\# Sistema de vida y daño
+\# Sistema de vida y daño (pendiente)
 
-\# Que los disparos mueran, al colisionar con colliders y jugador
+\# Que los disparos mueran, al colisionar con colliders y jugador (pendiente)
 
-\# Zonas detectables, es decir areas que nos permitan saber si el player está en ellas como puede ser un radio de explosión
+
 
 ---
 ### Paso 3
+
+\# Zonas detectables, es decir areas que nos permitan saber si el player está en ellas como puede ser un radio de explosión 
 
 \# Diversificar lo ya hecho (crear paredes más complejas entre otros)
 

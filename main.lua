@@ -63,7 +63,7 @@ function love.update(dt)
         wall:_wall_collider(player1, dt)
     end
     for i,door in pairs(door_word) do
-        distance_to_door = door:_toc_toc_door(player1)
+        door:_toc_toc_door(player1,30)
         if  not door.open then
             door:_wall_collider(player1, dt)
         end
@@ -160,7 +160,7 @@ function love.draw()
             love.graphics.print("velocidad = " .. tostring(trunc(player1.velocity,3))  , 0 , 440 )
             love.graphics.print("screen_width = " .. tostring(screen_width), 0 , 450 )
             love.graphics.print("screen_height = " .. tostring(screen_height), 0 , 460 )
-            love.graphics.print("distance_to_door = " .. tostring(distance_to_door), 0 , 470 )
+            --love.graphics.print("distance_to_door = " .. tostring(distance_to_door), 0 , 470 )
         end
         --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then

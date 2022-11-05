@@ -144,3 +144,21 @@ function show_tabla(tabla)
         print(str)
     end
 end
+
+function keypressed(key,prop)
+    --local check1 = false
+    --local check2 = false
+
+    if love.keyboard.isDown(key) then
+        check1 = true     
+    end
+    if not love.keyboard.isDown(key) and check1 then
+        check2 = true 
+    end    
+    if check1 and check2 then
+        prop =not prop
+        check1 =false
+        check2 =false
+    end
+    return prop
+end

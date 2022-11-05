@@ -1,5 +1,6 @@
 Object = require("lukeclassic")
 Player = Object:extend()
+require "tools"
 
 
 function Player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
@@ -15,20 +16,7 @@ function Player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.click_left = click_left or false
     self.coefficient = 1
 end
-function keypressed(key,prop)
-    if love.keyboard.isDown(key) then
-        check1 = true     
-    end
-    if not love.keyboard.isDown(key) and check1 then
-        check2 = true 
-    end    
-    if check1 and check2 then
-        prop =not prop
-        check1 =false
-        check2 =false
-    end
-    return prop
-end
+
 
 
 
