@@ -12,6 +12,7 @@ require "physics"
 bullets ={}
 screen_width = love.graphics.getWidth() --ancho de la ventana
 screen_height = love.graphics.getHeight() --alto de la ventana
+KeyChecks = {}
 
 
 -- Estados de Juego --

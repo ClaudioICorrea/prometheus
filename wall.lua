@@ -69,6 +69,6 @@ end
 
 function Wall:_toc_toc_door(object,tol)
     if dist(object.x,object.y, self.mid_x, self.mid_y ) < tol then
-        door.open=keypressed("e", door.open)
+        door.open = keypressed("e", door.open)
     end
 end 
