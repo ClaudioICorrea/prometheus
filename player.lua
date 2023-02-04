@@ -13,7 +13,9 @@ function Player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.target_x = target_x or 0
     self.target_y = target_y or 0
     self.click_right = click_right or false
+    self.click_right_pressed = click_right or false
     self.click_left = click_left or false
+    self.click_left_pressed = click_left or false
     self.coefficient = 1
 end
 
@@ -51,7 +53,9 @@ function Player:_input_player()
             game.state["running"] = false
         end
         info_game = keypressed("1", info_game)
-    end 
+    end
+    zone_selection= mousepressed(2, zone_selection)
+    
 end
 
 
@@ -70,8 +74,11 @@ function Player:draw()
     if self.click_right then
         love.graphics.setColor(1, 0, 0)
     end
+    xx=select(2,self.target_x,self.target_y)
     if self.click_left then
         love.graphics.setColor(0, 1, 0)
+        
+        love.graphics.polygon("line",xx[1],xx[2],xx[3],xx[2],xx[3],xx[4],xx[1],xx[4])
     end
     love.graphics.circle("line", self.target_x, self.target_y, 10) --dibuja un circulo
 end

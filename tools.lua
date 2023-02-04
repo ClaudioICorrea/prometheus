@@ -156,3 +156,33 @@ function keypressed(key,prop)
     end
     return prop
 end
+
+function mousepressed(key,prop)
+
+    if love.mouse.isDown(key) then
+        KeyChecks[key] = true
+    end
+    if not love.mouse.isDown(key) and KeyChecks[key] then
+        prop =not prop
+        KeyChecks[key]=false
+    end
+    return prop
+end
+
+function select(key,x,y)
+    if not love.mouse.isDown(key) then 
+        x_i =x
+        y_i =y
+    end 
+    if love.mouse.isDown(key) then
+        KeyChecks[key] = true
+        x_f = x
+        y_f = y
+    end
+    if not love.mouse.isDown(key) and KeyChecks[key] then
+        KeyChecks[key]=false
+        x_f = x
+        y_f = y
+    end
+    return{x_i,y_i,x_f,y_f}
+end 
