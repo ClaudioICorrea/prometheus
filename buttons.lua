@@ -29,10 +29,16 @@ end
 function Button:draw()
 
     love.graphics.setColor(0.6, 0.6, 0.6)
+    hor_cond = math.abs(self.button_x + self.width/2 - love.mouse.getX()) <= self.width/2
+    ver_cond = math.abs(self.button_y + self.height/2 - love.mouse.getY()) <= self.height/2
+    if(hor_cond and ver_cond)then
+        love.graphics.setColor(0.8, 0.8, 0.8)
+    end
     love.graphics.rectangle("fill", self.button_x, self.button_y, self.width, self.height)
     love.graphics.setColor(0, 0, 0)
     love.graphics.print(self.text, self.button_x + self.text_x, self.button_y +self.text_y)
     love.graphics.setColor(1, 1, 1)
+
 end
 
 

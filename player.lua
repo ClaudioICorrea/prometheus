@@ -56,6 +56,9 @@ function Player:_input_player()
     end
     zone_selection= mousepressed(2, zone_selection)
     
+
+        edit_mode = keypressed("p", edit_mode)
+    end 
 end
 
 
@@ -77,7 +80,6 @@ function Player:draw()
     xx=select(2,self.target_x,self.target_y)
     if self.click_left then
         love.graphics.setColor(0, 1, 0)
-        
         love.graphics.polygon("line",xx[1],xx[2],xx[3],xx[2],xx[3],xx[4],xx[1],xx[4])
     end
     love.graphics.circle("line", self.target_x, self.target_y, 10) --dibuja un circulo

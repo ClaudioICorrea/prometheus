@@ -14,6 +14,8 @@ screen_width = love.graphics.getWidth() --ancho de la ventana
 screen_height = love.graphics.getHeight() --alto de la ventana
 KeyChecks = {}
 
+save_edit_button = Button("save edited walls",function() print("este boton no hace nada aun")  end,nil,110,50,0.8*screen_width,0.9*screen_height)
+
 
 -- Estados de Juego --
 game = {
