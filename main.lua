@@ -14,6 +14,8 @@ screen_width = love.graphics.getWidth() --ancho de la ventana
 screen_height = love.graphics.getHeight() --alto de la ventana
 KeyChecks = {}
 
+save_edit_button = Button("save edited walls",function() print("este boton no hace nada aun")  end,nil,110,50,0.8*screen_width,0.9*screen_height)
+
 
 -- Estados de Juego --
 game = {
@@ -32,6 +34,7 @@ function love.load()
 
 
     info_game = false
+    edit_mode = false
     player1 = Player(700, 400, 50, 50, 100, 5)-- jugador
     load_menu() -- menu
     --escenario--
@@ -116,6 +119,9 @@ end
 function love.draw()
     --love.graphics.circle("line",screen_width/2,screen_height/2,30)
     if game.state["running"] then
+        if(edit_mode) then
+            save_edit_button:draw()
+        end
         -- Dibujar Jugador 1 --
         player1:draw()
         -- Dibujar Enemigos

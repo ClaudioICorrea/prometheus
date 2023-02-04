@@ -51,6 +51,7 @@ function Player:_input_player()
             game.state["running"] = false
         end
         info_game = keypressed("1", info_game)
+        edit_mode = keypressed("p", edit_mode)
     end 
 end
 
