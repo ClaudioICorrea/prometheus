@@ -141,6 +141,11 @@ function love.draw()
             ejem_y =ejem[2]
             love.graphics.circle("fill",ejem_x, ejem_y, 1)
         end
+        --Dibujar area y elementos select
+        player1.element_select = select(2,player1.target_x,player1.target_y,player1.element_select,enemies_mele)
+        for i,element_ in pairs(player1.element_select) do  
+            square_draw("line", element_.x, element_.y, 20, 20)
+        end  
         for i,door in pairs(door_word) do
             door:draw()
             ejem=project_in_wall(player1,door)
@@ -167,9 +172,13 @@ function love.draw()
             love.graphics.print("screen_height = " .. tostring(screen_height), 0 , 460 )
             --love.graphics.print("distance_to_door = " .. tostring(distance_to_door), 0 , 470 )
         end
-        if zone_selection then 
-            love.graphics.line(50, 50, 700, 180)
+        if edit_mode then
+            save_edit_button:draw()
         end
+
+        --if zone_selection then 
+        --    love.graphics.line(50, 50, 700, 180)
+        --end
         --love.graphics.line(50, 50, 700, 180)
     elseif game.state["menu"] then
         draw_menu()        

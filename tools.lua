@@ -169,7 +169,8 @@ function mousepressed(key,prop)
     return prop
 end
 
-function select(key,x,y)
+function select(key,x,y,element_select,element_all)
+    luke =false
     if not love.mouse.isDown(key) then 
         x_i =x
         y_i =y
@@ -183,6 +184,28 @@ function select(key,x,y)
         KeyChecks[key]=false
         x_f = x
         y_f = y
+        luke = true
     end
-    return{x_i,y_i,x_f,y_f}
+    if love.mouse.isDown(key) then
+        love.graphics.setColor(0, 1, 0)
+        love.graphics.polygon("line",x_i,y_i,x_f,y_i,x_f,y_f,x_i,y_f)
+    end
+    if luke then
+        for i,element_table in pairs(element_all) do  
+            if x_i <= element_table.x and element_table.x <= x_f and y_i <= element_table.y  and  element_table.y <= y_f  then
+                table.inster(element_table,element_select)
+            end
+        end
+    end
+    for i,element_ in pairs(element_select) do  
+        square_draw("line", element_.x, element_.y, 20, 20)
+    end    
+    --end 
+    return element_select 
 end 
+
+---  for i,element_table in pairs(table_all) do  
+--if x_i < element_table.x < x_f and y_i < element_table.y < y_f then
+---    table.inster(element_select,element_table)
+--end 
+--end

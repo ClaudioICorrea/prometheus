@@ -41,7 +41,8 @@ function Enemy:draw()
     if self.is_ranger then
         love.graphics.polygon("line", self.x - 10, self.y + 10, self.x + 10, self.y + 10, self.x, self.y - 10)
     else
-        square_draw("line", self.x, self.y, 20, 20)
+        --square_draw("line", self.x, self.y, 20, 20)
+        love.graphics.circle("line", self.x, self.y, 10)
     end
 end
 

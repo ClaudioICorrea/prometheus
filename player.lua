@@ -23,6 +23,7 @@ end
 
 
 function Player:_input_player()
+    self.element_select = {}
     self.direction_x = 0
     self.direction_y = 0
     self.target_x = love.mouse.getX() -- ubicacion del mouse en x
@@ -57,8 +58,7 @@ function Player:_input_player()
     zone_selection= mousepressed(2, zone_selection)
     
 
-        edit_mode = keypressed("p", edit_mode)
-    end 
+    edit_mode = keypressed("p", edit_mode)
 end
 
 
@@ -77,10 +77,7 @@ function Player:draw()
     if self.click_right then
         love.graphics.setColor(1, 0, 0)
     end
-    xx=select(2,self.target_x,self.target_y)
-    if self.click_left then
-        love.graphics.setColor(0, 1, 0)
-        love.graphics.polygon("line",xx[1],xx[2],xx[3],xx[2],xx[3],xx[4],xx[1],xx[4])
-    end
+    
+   
     love.graphics.circle("line", self.target_x, self.target_y, 10) --dibuja un circulo
 end
