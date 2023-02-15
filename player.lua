@@ -1,5 +1,6 @@
 Object = require("lukeclassic")
 Player = Object:extend()
+require "tools"
 
 
 function Player:new(x, y, target_x, target_y, velocity, click_right, click_left, radius)
@@ -12,27 +13,17 @@ function Player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.target_x = target_x or 0
     self.target_y = target_y or 0
     self.click_right = click_right or false
+    self.click_right_pressed = click_right or false
     self.click_left = click_left or false
+    self.click_left_pressed = click_left or false
     self.coefficient = 1
 end
-function keypressed(key,prop)
-    if love.keyboard.isDown(key) then
-        check1 = true     
-    end
-    if not love.keyboard.isDown(key) and check1 then
-        check2 = true 
-    end    
-    if check1 and check2 then
-        prop =not prop
-        check1 =false
-        check2 =false
-    end
-    return prop
-end
+
 
 
 
 function Player:_input_player()
+    self.element_select = {}
     self.direction_x = 0
     self.direction_y = 0
     self.target_x = love.mouse.getX() -- ubicacion del mouse en x
@@ -63,7 +54,11 @@ function Player:_input_player()
             game.state["running"] = false
         end
         info_game = keypressed("1", info_game)
-    end 
+    end
+    zone_selection= mousepressed(2, zone_selection)
+    
+
+    edit_mode = keypressed("p", edit_mode)
 end
 
 
@@ -82,8 +77,7 @@ function Player:draw()
     if self.click_right then
         love.graphics.setColor(1, 0, 0)
     end
-    if self.click_left then
-        love.graphics.setColor(0, 1, 0)
-    end
+    
+   
     love.graphics.circle("line", self.target_x, self.target_y, 10) --dibuja un circulo
 end

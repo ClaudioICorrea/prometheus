@@ -47,6 +47,11 @@ function project_in_wall(object,wall)
     return {xx,yy}
 end
 
+function dist_to_wall(object,wall)
+    dist_wall= project_in_wall(object,wall)
+    d= dist(object.x,object.y,dist_wall[1],dist_wall[2])
+    return d
+end 
 function ball_collider(x_0, y_0, ball_radius, walker, dt)
     next_pos_x = walker.x + dt * walker.velocity * walker.direction_x
     next_pos_y = walker.y + dt * walker.velocity * walker.direction_y
@@ -132,6 +137,75 @@ end
 
 function show_tabla(tabla)
     for i,line in pairs(tabla) do
-        print(line[1],line[2])
+        str = ""
+        for j,elent in  pairs(line) do 
+            str = str .." ".. tostring(line[j])
+        end
+        print(str)
     end
 end
+
+function keypressed(key,prop)
+
+    if love.keyboard.isDown(key) then
+        KeyChecks[key] = true
+    end
+    if not love.keyboard.isDown(key) and KeyChecks[key] then
+        prop =not prop
+        KeyChecks[key]=false
+    end
+    return prop
+end
+
+function mousepressed(key,prop)
+
+    if love.mouse.isDown(key) then
+        KeyChecks[key] = true
+    end
+    if not love.mouse.isDown(key) and KeyChecks[key] then
+        prop =not prop
+        KeyChecks[key]=false
+    end
+    return prop
+end
+
+function select(key,x,y,element_select,element_all)
+    luke =false
+    if not love.mouse.isDown(key) then 
+        x_i =x
+        y_i =y
+    end 
+    if love.mouse.isDown(key) then
+        KeyChecks[key] = true
+        x_f = x
+        y_f = y
+    end
+    if not love.mouse.isDown(key) and KeyChecks[key] then
+        KeyChecks[key]=false
+        x_f = x
+        y_f = y
+        luke = true
+    end
+    if love.mouse.isDown(key) then
+        love.graphics.setColor(0, 1, 0)
+        love.graphics.polygon("line",x_i,y_i,x_f,y_i,x_f,y_f,x_i,y_f)
+    end
+    if luke then
+        for i,element_table in pairs(element_all) do  
+            if x_i <= element_table.x and element_table.x <= x_f and y_i <= element_table.y  and  element_table.y <= y_f  then
+                table.inster(element_table,element_select)
+            end
+        end
+    end
+    for i,element_ in pairs(element_select) do  
+        square_draw("line", element_.x, element_.y, 20, 20)
+    end    
+    --end 
+    return element_select 
+end 
+
+---  for i,element_table in pairs(table_all) do  
+--if x_i < element_table.x < x_f and y_i < element_table.y < y_f then
+---    table.inster(element_select,element_table)
+--end 
+--end
