@@ -169,8 +169,13 @@ function mousepressed(key,prop)
     return prop
 end
 
+function square_unit(xi,yi,xf,yf,x,y)
+    xx = ((yf-yi)*(x-xi))/((xf-xi)*(yf-yi))
+    yy = ((xf-xi)*(y-yi))/((xf-xi)*(yf-yi))
+    return {xx,yy}
+end
+
 function select(key,x,y,element_select,element_all)
-    luke =false
     if not love.mouse.isDown(key) then 
         x_i =x
         y_i =y
@@ -190,32 +195,44 @@ function select(key,x,y,element_select,element_all)
         love.graphics.setColor(0, 1, 0)
         love.graphics.polygon("line",x_i,y_i,x_f,y_i,x_f,y_f,x_i,y_f)
     end
-    if luke then
+    if  KeyChecks[key] then
         for i,element_table in pairs(element_all) do  
-            if x_i <= element_table.x and element_table.x <= x_f and y_i <= element_table.y  and  element_table.y <= y_f  then
-                table.inster(element_table,element_select)
+            xx = square_unit(x_i,y_i,x_f,y_f,element_table.x,element_table.y)
+            if 0 <= xx[1] and xx[1] <= 1 and 0 <= xx[2]  and  xx[2] <= 1  then
+                table.insert(element_select,element_table)
             end
         end
-    end  
-    --end 
+    end 
     return element_select 
 end 
 
 function read_table(Table,indent)
     text=""
-    local slash="\n"
+    local slash=""
     for i=1,indent,1 do
         slash=slash.."--"
     end
     for index, element in pairs(Table) do
-        if(not(type(element)=="table")) then
-            text=text..slash..index..":"..element
-        else
+        text=text..slash..index
+        if(type(element)=="table") then
             text=text..read_table(element,indent+1)
+        elseif(type(element)=="boolean")then
+            if(element)then 
+                text=text..":true"
+            else 
+                text=text..":false"
+            end
+        elseif(type(element)=="function")then
+            text=text..":function"
+        else
+            text=text..":"..element
         end
+        text=text.."\n"
     end
     return text
 end
+
+
 
 ---  for i,element_table in pairs(table_all) do  
 --if x_i < element_table.x < x_f and y_i < element_table.y < y_f then
