@@ -196,13 +196,26 @@ function select(key,x,y,element_select,element_all)
                 table.inster(element_table,element_select)
             end
         end
-    end
-    for i,element_ in pairs(element_select) do  
-        square_draw("line", element_.x, element_.y, 20, 20)
-    end    
+    end  
     --end 
     return element_select 
 end 
+
+function read_table(Table,indent)
+    text=""
+    local slash="\n"
+    for i=1,indent,1 do
+        slash=slash.."--"
+    end
+    for index, element in pairs(Table) do
+        if(not(type(element)=="table")) then
+            text=text..slash..index..":"..element
+        else
+            text=text..read_table(element,indent+1)
+        end
+    end
+    return text
+end
 
 ---  for i,element_table in pairs(table_all) do  
 --if x_i < element_table.x < x_f and y_i < element_table.y < y_f then

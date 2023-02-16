@@ -170,7 +170,10 @@ function love.draw()
             love.graphics.print("velocidad = " .. tostring(trunc(player1.velocity,3))  , 0 , 440 )
             love.graphics.print("screen_width = " .. tostring(screen_width), 0 , 450 )
             love.graphics.print("screen_height = " .. tostring(screen_height), 0 , 460 )
-            --love.graphics.print("distance_to_door = " .. tostring(distance_to_door), 0 , 470 )
+            text_element_select=read_table(player1.element_select,0)
+            love.graphics.print("element_select = " .. text_element_select, 0 , 470 )
+            text_enemies_mele=read_table(enemies_mele,0)
+            love.graphics.print("enemies_mele = " .. text_enemies_mele, 0 , 480 )
         end
         if edit_mode then
             save_edit_button:draw()
