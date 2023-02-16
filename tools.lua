@@ -176,6 +176,8 @@ function square_unit(xi,yi,xf,yf,x,y)
 end
 
 function select(key,x,y,element_select,element_all)
+    
+
     if not love.mouse.isDown(key) then 
         x_i =x
         y_i =y
@@ -184,6 +186,9 @@ function select(key,x,y,element_select,element_all)
         KeyChecks[key] = true
         x_f = x
         y_f = y
+        if not love.keyboard.isDown("lctrl") then 
+            element_select = {}
+        end 
     end
     if not love.mouse.isDown(key) and KeyChecks[key] then
         KeyChecks[key]=false

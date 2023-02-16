@@ -17,13 +17,13 @@ function Player:new(x, y, target_x, target_y, velocity, click_right, click_left,
     self.click_left = click_left or false
     self.click_left_pressed = click_left or false
     self.coefficient = 1
+    self.element_select = {}
 end
 
 
 
 
 function Player:_input_player()
-    self.element_select = {}
     self.direction_x = 0
     self.direction_y = 0
     self.target_x = love.mouse.getX() -- ubicacion del mouse en x

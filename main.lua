@@ -77,6 +77,7 @@ function love.update(dt)
         window:_wall_collider(player1, dt)
     end
     --ball_collider(screen_width/2,screen_height/2,30,player1,dt)
+    
     player1:_move(dt)
 
 
